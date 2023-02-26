@@ -17,7 +17,7 @@
                 <div class="row">
                     {% for product in object_list %}
                         <div class="col text-center mb-4">
-                            <a href="#" class="btn">
+                            <a href="{% url 'product_detail' product.id%}" class="btn">
                                 <div>
                                     <img src="{{product.image.url}}" width="200px" height="300px">
                                     <div class="fw-bold">Name: 《{{product.productName}}》</div>
@@ -29,6 +29,29 @@
                     {% endfor %}  
                 </div>
             </div>     
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">page up</a>
+                {% endif %}
+        
+                <span class="current">
+                    {% for page in page_obj.paginator.page_range%}
+                        {% if page == page_obj.number%}
+                            {{page}}
+                        {% else %}
+                            <a href="?page={{page}}">{{page}}</a>
+                        {% endif%}
+                    {% endfor%}
+                </span>
+        
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">page down</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
         </div>
     </div>
 {% endblock main-content %}
