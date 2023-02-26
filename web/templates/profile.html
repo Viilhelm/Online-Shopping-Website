@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block main-content %}
+    {{request.user}}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for fm in form%}
+        {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+        <br>
+        {% endfor %}
+        <button type="submit">Submit</button>
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_filed_errors %}
+                <p>{{error}}</p>
+                {% endfor %}
+            {% endif %} 
+
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-{{msg.tags}}" role="alert">
+                {{msg}}
+            </div>
+            {% endfor %} 
+            {% endif %}
+        </form>
+{% endblock main-content %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products{% endblock title %}
+{% block main-content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group">
+                    {% for product in object_list %}
+                    <a href="#" class="list-group-item list-group-item-action" aria-current-"True">
+                        {{product.category.categoryName}}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="row">
+                    {% for product in object_list %}
+                        <div class="col text-center mb-4">
+                            <a href="#" class="btn">
+                                <div>
+                                    <img src="{{product.image.url}}" width="200px" height="300px">
+                                    <div class="fw-bold">Name: 《{{product.productName}}》</div>
+                                    <div class="fw-bold text-danger">Price: ${{product.price}}</div>
+                                    <div class="fw-bold">Category: {{product.category.categoryName}}</div>
+                                </div>
+                            </a>
+                        </div>  
+                    {% endfor %}  
+                </div>
+            </div>     
+        </div>
+    </div>
+{% endblock main-content %}
