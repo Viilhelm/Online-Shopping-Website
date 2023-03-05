@@ -6,3 +6,5 @@ from .models import Customer
 class CustomerModelAdmin(admin.ModelAdmin):
     list_display = ['user','fullName','phoneNum','address']
 
+
+
