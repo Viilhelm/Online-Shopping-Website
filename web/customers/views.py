@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from .forms import CustomerRegistrationForm, CustomerProfileForm
+from django.views.generic import ListView
+from .forms import CustomerRegistrationForm, CustomerProfileAddForm
 from django.contrib import messages
 from .models import Customer
 
@@ -18,12 +19,12 @@ class CustomerRegistrationView(View):
             messages.warning(request,"Invalid Input Data")
         return render(request,'customerregistration.html',locals())
 
-class ProfileView(View):
+class ProfileAddView(View):
     def get(self,request):
-        form = CustomerProfileForm()
-        return render(request,'profile.html',locals())
+        form = CustomerProfileAddForm()
+        return render(request,'profileAdd.html',locals())
     def post(self,request):
-        form = CustomerProfileForm(request.POST)
+        form = CustomerProfileAddForm(request.POST)
         if form.is_valid():
             user = request.user
             fullName = form.cleaned_data['fullName']
@@ -34,4 +35,23 @@ class ProfileView(View):
             reg.save()
         else:
             messages.warning(request,"Invalid Input Data")
-        return render(request,'profile.html',locals())
+        return render(request,'profileAdd.html',locals())
+
+class CustomerProfileView(ListView):
+    template_name = 'profile.html'
+    def get_queryset(self):
+        return Customer.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['section'] = "MyProfile"
+        return context
+    
+class CustomerProfileView(View):
+    def get(self, request):
+        profiles = Customer.objects.filter(user=request.user)
+
+        context = {
+            'profiles': profiles,
+         }
+        return render(request, 'profile.html', context)
