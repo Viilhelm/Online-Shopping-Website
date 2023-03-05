@@ -17,7 +17,7 @@ class CustomerRegistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-class CustomerProfileForm(forms.ModelForm):
+class CustomerProfileAddForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields= ['fullName','phoneNum','address']
@@ -26,6 +26,7 @@ class CustomerProfileForm(forms.ModelForm):
             'phoneNum':forms.TextInput(attrs={'class':'form-control'}),
             'address':forms.TextInput(attrs={'class':'form-control'}),
         }
+
 
 
 
