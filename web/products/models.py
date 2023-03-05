@@ -7,11 +7,13 @@ class Product(models.Model):
     ISBN = models.CharField(max_length=17)
     author = models.CharField(max_length=100)
     publisher = models.CharField(max_length=100)
-    introduction = models.TextField(max_length=500)
+    introduction = models.TextField(max_length=1000)
     image = models.ImageField(upload_to='product')
-    category = models.ForeignKey('Category', on_delete=models.CASCADE,)
+    category = models.ForeignKey('Category', related_name="products", on_delete=models.CASCADE,)
     avgRating = models.DecimalField(default=0, max_digits=3, decimal_places=2)
 
 
 class Category(models.Model):
     categoryName = models.CharField(max_length=50)
+
+

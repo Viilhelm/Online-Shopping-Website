@@ -16,13 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.urls import re_path as url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('customers.urls')),
-    path('', include('products.urls')),
-    path('', include('customers.urls')),
+  
+    path('', include(('customers.urls', 'customers'), namespace='customers')),
+    path('api-auth/', include('rest_framework.urls')),
+    url(r'^', include(('products.urls', 'products'), namespace='products')),
+    path('', include('shoppingcart.urls')),
+    path('', include(('order.urls','order'), namespace="order")),
 
     
 

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products{% endblock title %}
+{% block main-content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group">
+                    <a href="{% url 'products:products' 1 %}" class="list-group-item list-group-item-action" aria-current-"True"> All </a>
+                    {% for category in categories %}
+                    <a href="{% url 'products:category' category.id 1 %}" class="list-group-item list-group-item-action" aria-current-"True">
+                        {{category.categoryName}}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="r_wrap fr clearfix">
+                    <div class="sort_bar">
+                        <a href="{% url 'products:category' category.id 1 %}?sort=default" {% if sort == 'default' %}class="active"{% endif %}>默认</a>
+                        <a href="{% url 'products:category' category.id 1 %}?sort=price" {% if sort == 'price' %}class="active"{% endif %}>价格</a>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col text-center mb-4">
+                            <a href="{% url 'products:product_detail' product.id %}" class="btn">
+                                <div>
+                                    <img src="{{product.image.url}}" width="200px" height="300px">
+                                    <div class="fw-bold">Name: 《{{product.productName}}》</div>
+                                    <div class="fw-bold text-danger">Price: ${{product.price}}</div>
+                                    <div class="fw-bold">Category: {{product.category.categoryName}}</div>
+                                </div>
+                            </a>
+                        </div>  
+                    {% endfor %}  
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if products_page.has_previous %}
+                        <a href="{% url 'products:category' category.id products_page.previous_page_number %}?sort={{ sort }}">上一页</a>
+                    {% endif %}
+                    {% for pindex in pages %}
+                        {% if pindex == products_page.number %}
+                            <a href="{% url 'products:category' category.id pindex %}?sort={{ sort }}" class="active">{{ pindex }}</a>
+                        {% else %}
+                            <a href="{% url 'products:category' category.id pindex %}?sort={{ sort }}">{{ pindex }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if products_page.has_next %}
+                        <a href="{% url 'products:category' category.id products_page.next_page_number %}?sort={{ sort }}">下一页></a>
+                    {% endif %}
+                        
+
+
+                      
+                    </span>
+                </div>
+            </div>     
+        </div>
+    </div>
+{% endblock main-content %}

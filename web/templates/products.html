@@ -6,18 +6,26 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="list-group">
-                    {% for product in object_list %}
-                    <a href="#" class="list-group-item list-group-item-action" aria-current-"True">
-                        {{product.category.categoryName}}
+                    <a href="{% url 'products:products' 1 %}" class="list-group-item list-group-item-action" aria-current-"True"> All </a>
+                    {% for category in categories %}
+                    <a href="{% url 'products:category' category.id 1 %}" class="list-group-item list-group-item-action" aria-current-"True">
+                        {{category.categoryName}}
                     </a>
                     {% endfor %}
                 </div>
             </div>
             <div class="col-sm-9">
+                <div class="r_wrap fr clearfix">
+                    <div class="sort_bar">
+                        <a href="{% url 'products:products'  1 %}?sort=default" {% if sort == 'default' %}class="active"{% endif %}>默认</a>
+                        <a href="{% url 'products:products'  1 %}?sort=price" {% if sort == 'price' %}class="active"{% endif %}>价格</a>
+                    </div>
+                </div>
+          
                 <div class="row">
-                    {% for product in object_list %}
+                    {% for product in products %}
                         <div class="col text-center mb-4">
-                            <a href="{% url 'product_detail' product.id%}" class="btn">
+                            <a href="{% url 'products:product_detail' product.id %}" class="btn">
                                 <div>
                                     <img src="{{product.image.url}}" width="200px" height="300px">
                                     <div class="fw-bold">Name: 《{{product.productName}}》</div>
@@ -28,30 +36,28 @@
                         </div>  
                     {% endfor %}  
                 </div>
-            </div>     
-        </div>
-        <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">page up</a>
-                {% endif %}
-        
-                <span class="current">
-                    {% for page in page_obj.paginator.page_range%}
-                        {% if page == page_obj.number%}
-                            {{page}}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if products_page.has_previous %}
+                        <a href="{% url 'products:products' products_page.previous_page_number %}?sort={{ sort }}">上一页</a>
+                    {% endif %}
+                    {% for pindex in pages %}
+                        {% if pindex == products_page.number %}
+                            <a href="{% url 'products:products' pindex %}?sort={{ sort }}" class="active">{{ pindex }}</a>
                         {% else %}
-                            <a href="?page={{page}}">{{page}}</a>
-                        {% endif%}
-                    {% endfor%}
-                </span>
-        
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">page down</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
+                            <a href="{% url 'products:products' pindex %}?sort={{ sort }}">{{ pindex }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if products_page.has_next %}
+                        <a href="{% url 'products:products' products_page.next_page_number %}?sort={{ sort }}">下一页></a>
+                    {% endif %}
+                        
+
+
+                      
+                    </span>
+                </div>
+            </div>     
         </div>
     </div>
 {% endblock main-content %}

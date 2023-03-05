@@ -4,8 +4,9 @@ from .models import Product,Category
 # Register your models here.
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['productName','price','category','ISBN','author','publisher','introduction','image','avgRating']
+    list_display = ['id','productName','price','category','ISBN','author','publisher','introduction','image','avgRating']
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['categoryName']
+    list_display = ['id','categoryName']
+
 

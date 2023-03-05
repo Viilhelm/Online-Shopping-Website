@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Order Detail{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled">
+                <li class="d-grid"><a href="{% url 'order:orders' %}" class="btn btn-primary">Orders</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 offset-sm-1">
+            <h3>PONumber: {{order.PONumber}}</h3>
+            {% for item in orderitems %}
+                
+                <div class="col-sm-7">
+                    <p>Name: {{item.product.productName}}</p>
+                    <p>Quantity: 1 </p>
+                    <p>Price: {{item.price}}</p>
+                    
+                </div>
+            {% endfor %}
+                <div class="col-sm">
+                    <p>Purchase Date: {{order.purchaseDate}}</p>
+                    <p>Order Status: {{order.status}}</p>
+                </div>
+            
+            {% for c in customer %}
+                <p>Customer Name: {{c.fullName}}</P>
+                <p>Shipping Address: {{c.adress}}</p>
+            {% endfor %}
+            <h3>Total: {{total}}</h3>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
+

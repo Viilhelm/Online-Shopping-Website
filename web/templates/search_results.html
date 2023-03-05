@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search Result{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+    <P> shit!!!!!!!{{ query }} </p>
+    {% if products %}
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group">
+                    <a href="{% url 'products' %}" class="list-group-item list-group-item-action" aria-current-"True"> All </a>
+                    {% for category in category %}
+                    <a href="{% url 'category' category.id %}" class="list-group-item list-group-item-action" aria-current-"True">
+                        {{category.categoryName}}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="row">
+                
+                    {% for product in products %}
+                        <div class="col text-center mb-4">
+                            <a href="{% url 'product_detail' product.id %}" class="btn">
+                                <div>
+                                    <img src="{{product.image.url}}" width="200px" height="300px">
+                                    <div class="fw-bold">Name: 《{{product.productName}}》</div>
+                                    <div class="fw-bold text-danger">Price: ${{product.price}}</div>
+                                    <div class="fw-bold">Category: {{product.category.categoryName}}</div>
+                                </div>
+                            </a>
+                        </div>  
+                    {% endfor %}  
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">page up</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            {% for page in page_obj.paginator.page_range%}
+                                {% if page == page_obj.number%}
+                                    {{page}}
+                                {% else %}
+                                    <a href="?page={{page}}">{{page}}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">page down</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>     
+        </div>
+    {% else %}
+        <P>No post matched your search criteria.</p>
+    {% endif %}
+</div>
+{% endblock main-content %}
