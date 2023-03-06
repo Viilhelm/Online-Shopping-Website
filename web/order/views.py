@@ -82,7 +82,7 @@ def orderCommit(request):
     ).save()
     order = Order.objects.get(PONumber=PONumber)
     for sc in shoppingcart:
-        OrderItem().save()
+        OrderItem(order=order,product=sc.product,price=sc.product.price).save()
         sc.delete()
     return redirect('order:order_detail', kwargs={'PONumber' : PONumber})
 
