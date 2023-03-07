@@ -35,8 +35,8 @@
             </form>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               {% if user.is_authenticated %}
-                  {% for group in request.user.groups.all %}
-                  {% if group.name == 'Customer' %}
+
+                {% if user.in_group('Customer') %}
                   <li class="nav-item mx-2">
                       <a class="nav-link text-white" href="{% url 'shoppingcart' %}">Shopping Cart</a>
                   </li>
@@ -50,8 +50,9 @@
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                       </ul>
                   </li>
+                {% endif %}
 
-                  {% elif group.name == 'Vendor' %}
+                {% if user.in_group('Vendor') %}
                   <li class="nav-item dropdown mx-2">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       {{ user.username }}
@@ -61,8 +62,9 @@
                       <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                     </ul>
                 </li>
+
                   {% endif %}
-                  {% endfor %}
+
               {% else %}
                 <li class="nav-item-mx2">
                   <a class="nav-link text-white" href="{% url 'login' %}">Login</a>
