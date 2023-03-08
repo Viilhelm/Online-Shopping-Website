@@ -4,7 +4,7 @@ from products.models import Product, Category
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.db.models import Q
+
 
 
 # Create your views here.

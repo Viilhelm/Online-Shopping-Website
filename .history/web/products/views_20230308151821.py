@@ -4,7 +4,7 @@ from products.models import Product, Category
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.db.models import Q
+
 
 
 # Create your views here.
@@ -157,12 +157,12 @@ class ProductDetailView(DetailView):
 
 
     
-class SearchResultsView(ListView):
-    model = Product
-    template_name = 'search_results.html'
-    def get_queryset(self):  # new
-        query = self.request.GET.get("q")
-        object_list = Product.objects.filter(
-            Q(productName__icontains=query) | Q(id__icontains=query)
-        )
-        return object_list
+def search_product(request):
+    """ search function  """
+    if request.method == "POST":
+        query_name = request.POST.get('name', None)
+        if query_name:
+            results = Product.objects.filter(name__contains=query_name)
+            return render(request, 'search_result.html', {"results":results})
+
+    return render(request, 'search_result.html')
