@@ -32,8 +32,8 @@ class OrdersView(View):
         """显示列表页"""
 
         # 获取订单信息
-        customer = Customer.objects.get(user=request.user)
-        orders = Order.objects.filter(customer=customer)
+        
+        orders = Order.objects.filter(user=request.user)
 
         context = {
            
