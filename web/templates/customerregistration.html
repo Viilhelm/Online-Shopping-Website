@@ -2,29 +2,39 @@
 {% load static %}
 {% block title %}Customer Registration{% endblock title %}
 {% block main-content %}
-    <form action="" method="post" novalidate>
-        {% csrf_token %}
-        {% for fm in form%}
-           {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
-           <br>
-        {% endfor %}
-        <input type="submit" value="Submit"> <br>
-
-        <small>Existing User? <a href="{%url 'login' %}"> Login Now </a> </small>
-
-        {% if form.non_field_errors %}
-           {% for error in form.non_filed_errors %}
-              <p>{{error}}</p>
+<div class="container">
+   <div class="container">
+      <div class="col-sm-6 offset-sm-3">
+         <h3> Coustomer Registration</h3>
+         <hr>
+         <form action="" method="post" novalidate class="shadow p-5">
+            {% csrf_token %}
+            {% for fm in form%}
+               {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+               <br>
             {% endfor %}
-        {% endif %} 
+            <input type="submit" value="Submit" class="btn btn-primary"> <br>
+            
+            <div class="text-center text-primary fw-bold">
+               <small>Existing User? <a href="{%url 'login' %}" class="text-danger"> Login Now </a> </small>
+            </div>
 
-        {% if messages %}
-        {% for msg in messages %}
-           <div class="alert alert-{{msg.tags}}" role="alert">
-            {{msg}}
-           </div>
-        {% endfor %} 
-        {% endif %}
-    </form>
+            {% if form.non_field_errors %}
+               {% for error in form.non_filed_errors %}
+                  <p>{{error}}</p>
+                  {% endfor %}
+            {% endif %} 
+
+            {% if messages %}
+            {% for msg in messages %}
+               <div class="alert alert-{{msg.tags}}" role="alert">
+                  {{msg}}
+               </div>
+            {% endfor %} 
+            {% endif %}
+         </form>
+      </div>
+   </div>
+</div>
 {% endblock main-content %}
 
