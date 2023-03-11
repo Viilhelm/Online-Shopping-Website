@@ -2,24 +2,32 @@
 {% load static %}
 {% block title %}Login{% endblock title %}
 {% block main-content %}
-    <h3>Login</h3>
-    <form action="" method="post" novalidate>
-        {% csrf_token %}
-        {% for fm in form%}
-           {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
-           <br>
-        {% endfor %}
+<div class="container">
+    <div class="row my-3">
+       <div class="col-sm-6 offset-sm-3">
+            <h3>Login</h3>
+            <hr>
+            <form action="" method="post" novalidate class="shadow p-5"> 
+                {% csrf_token %}
+                {% for fm in form%}
+                    {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+                    <br>
+                {% endfor %}
 
-        <input type="submit" value="Login">
-        <div>
-            <small>New User? <a href="{% url 'customerregistration' %}">Create an Account</a></small>
+                <input type="submit" class="btn btn-primary mt-4" value="Login">
+                <div class="text-center text-primary fw-bold">
+                    <small>New User? <a href="{% url 'customerregistration' %}" class="text-danger">Create an Account</a></small>
+                </div>
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_filed_errors %}
+                        <p>{{error}}</p>
+                    {% endfor %}
+                {% endif %} 
+            
+            </form>
         </div>
-
-        {% if form.non_field_errors %}
-           {% for error in form.non_filed_errors %}
-              <p>{{error}}</p>
-            {% endfor %}
-        {% endif %} 
+    </div>
+</div>
         
-    </form>
 {% endblock main-content %}
