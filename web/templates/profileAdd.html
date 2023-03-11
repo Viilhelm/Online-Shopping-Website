@@ -1,35 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Login{% endblock title %}
+{% block title %}Add A Address{% endblock title %}
 {% block main-content %}
-    <div class="col-sm-8 offset-sm-1">
-        <form action="" method="post">
-            {% csrf_token %}
-            {% for fm in form %}
-            {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
-            <br>
-            {% endfor %}
-            <div class="col-2 mt-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-
-            {% if form.non_field_errors %}
-                {% for error in form.non_filed_errors %}
-                    <p>{{error}}</p>
+<div class="container">
+    <div class="row my-3">
+       <div class="col-sm-6 offset-sm-3">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for fm in form %}
+                    {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+                    <br>
                 {% endfor %}
-            {% endif %} 
+                <div class="col-2 mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="buttom col-6 mt-4">
+                    <p class="text-center"><a href="{% url 'profile' %}" type="button" class="btn btn-success">Return To Profile</a></p>
+                </div>
 
-            {% if messages %}
-                {% for msg in messages %}
-                    <div class="alert alert-{{msg.tags}}" role="alert">
-                        {{msg}}
-                    </div>
-                {% endfor %} 
-            {% endif %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_filed_errors %}
+                        <p>{{error}}</p>
+                    {% endfor %}
+                {% endif %} 
+
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="alert alert-{{msg.tags}}" role="alert">
+                            {{msg}}
+                        </div>
+                    {% endfor %} 
+                {% endif %}
             </form>
         </div>
-
-        <div class="buttom row flex">
-            <p class="text-center"><a href="{% url 'profile' %}" type="button" class="btn btn-success">Return To Profile</a></p>
-        </div>
+    </div>
+</div>
+        
 {% endblock main-content %}

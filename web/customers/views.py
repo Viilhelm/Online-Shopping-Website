@@ -4,6 +4,8 @@ from django.views.generic import ListView
 from .forms import CustomerRegistrationForm, CustomerProfileAddForm
 from django.contrib import messages
 from .models import Customer
+from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 class CustomerRegistrationView(View):
@@ -13,11 +15,19 @@ class CustomerRegistrationView(View):
     def post(self,request):
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
             messages.success(request,"Congratulations! User Register Successfully")
+            username = self.request.POST["username"]
+            password = self.request.POST.get("password", "default value")
+            
+            login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect("profileAdd")     
+            
         else:
             messages.warning(request,"Invalid Input Data")
+        
         return render(request,'customerregistration.html',locals())
+
 
 class ProfileAddView(View):
     def get(self,request):
@@ -30,9 +40,11 @@ class ProfileAddView(View):
             fullName = form.cleaned_data['fullName']
             phoneNum = form.cleaned_data['phoneNum']
             address = form.cleaned_data['address']
+            
 
             reg = Customer(user=user, fullName=fullName, phoneNum=phoneNum, address=address)
             reg.save()
+            messages.success(request, "Congratulations! Profile Save Successfully!")
         else:
             messages.warning(request,"Invalid Input Data")
         return render(request,'profileAdd.html',locals())
