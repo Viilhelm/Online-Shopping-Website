@@ -5,7 +5,8 @@ from .forms import CustomerRegistrationForm, CustomerProfileAddForm
 from django.contrib import messages
 from .models import Customer
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
+from django.contrib.auth.models import Group
 
 # Create your views here.
 class CustomerRegistrationView(View):
@@ -16,6 +17,8 @@ class CustomerRegistrationView(View):
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
             new_user = form.save()
+            group = Group.objects.get(name='Customer')
+            new_user.groups.add(group)
             messages.success(request,"Congratulations! User Register Successfully")
             username = self.request.POST["username"]
             password = self.request.POST.get("password", "default value")
