@@ -19,7 +19,7 @@ class CustomerRegistrationView(View):
             new_user = form.save()
             group = Group.objects.get(name='Customer')
             new_user.groups.add(group)
-            messages.success(request,"Congratulations! User Register Successfully")
+            messages.success(request,"Congratulations! Please continue to enter the address.")
             username = self.request.POST["username"]
             password = self.request.POST.get("password", "default value")
             
@@ -47,7 +47,8 @@ class ProfileAddView(View):
 
             reg = Customer(user=user, fullName=fullName, phoneNum=phoneNum, address=address)
             reg.save()
-            messages.success(request, "Congratulations! Profile Save Successfully!")
+            messages.success(request, "Congratulations! User Register Successfully!")
+            return redirect("products/1") 
         else:
             messages.warning(request,"Invalid Input Data")
         return render(request,'profileAdd.html',locals())
