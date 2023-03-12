@@ -4,13 +4,15 @@
 {% block main-content %}
 
 <div class="container my-5>
+    
     <div class="col-sm-8 offset-sm-1">
         <div class="row">
             {% for profile in profiles %}
             <div class="col-sm-6"} 
                 <div class="card m-2">
                     <div class="card-body">
-                        <h3> Address {{forloop.counter}} </h3>
+                        <P>Username: {{profile.user.username}} <p>
+                        <P>Email: {{profile.user.email}} <p>
                         <p>Full Name: {{profile.fullName}} </p>
                         <p>Phone Number: {{profile.phoneNum}} </p>
                         <p>Address: {{profile.address}} </p>
@@ -20,8 +22,6 @@
             {% endfor %}
         </div>
     </div>
-    <div class="buttom row flex">
-        <p class="text-center"><a href="{% url 'profileAdd' %}" type="button" class="btn btn-success">Add A New Profile</a></p>
-    </div>
+    
 </div>
 {% endblock main-content %}

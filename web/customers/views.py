@@ -53,19 +53,12 @@ class ProfileAddView(View):
             messages.warning(request,"Invalid Input Data")
         return render(request,'profileAdd.html',locals())
 
-class CustomerProfileView(ListView):
-    template_name = 'profile.html'
-    def get_queryset(self):
-        return Customer.objects.filter(user=self.request.user)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['section'] = "MyProfile"
-        return context
     
 class CustomerProfileView(View):
     def get(self, request):
         profiles = Customer.objects.filter(user=request.user)
+        
 
         context = {
             'profiles': profiles,
