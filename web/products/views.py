@@ -23,35 +23,17 @@ class ProductListView(View):
         sort = request.GET.get('sort')
         if sort == 'price':
             products = Product.objects.all().order_by('price')
-      
         else:
             sort = 'default'
-            products = Product.objects.all().order_by('-id')
+            products = Product.objects.all()
+    
 
         # 对商品进行分页s
-        paginator = Paginator(products, 1)
+        paginator = Paginator(products, 2)
 
-        # 获取第page页的内容
-        try:
-            page = int(page)
-        except Exception as e:
-            page = 1 
-        if page > paginator.num_pages:
-            page = 1
+        page = request.GET.get('page')
 
-        # 获取第page页的paginator.page实例对象
-        products_page = paginator.page(page)
-
-        # todo: 进行页码控制， 页面上最多显示5个页面
-        num_pages = paginator.num_pages
-        if num_pages < 5:
-            pages = range(1, num_pages + 1)
-        elif page <= 3:
-            pages = range(1, 6)
-        elif num_pages - page <= 2:
-            pages = range(num_pages - 4, num_pages + 1)
-        else:
-            pages = range(page - 2, page + 3)
+        productsPage = paginator.get_page(page)
 
         # 获取商品的分类信息
         categories = Category.objects.all()
@@ -64,11 +46,11 @@ class ProductListView(View):
         # 组织上下文
         context = {
            
-            'products_page': products_page,
+            'productsPage': productsPage,
             'categories': categories,
             'products': products,
             'sort': sort,
-            'pages': pages,
+            'page': page,
         }
 
 
@@ -92,35 +74,18 @@ class CategoryView(View):
         sort = request.GET.get('sort')
         if sort == 'price':
             products = Product.objects.filter(category=category).order_by('price')
-      
         else:
             sort = 'default'
-            products = Product.objects.filter(category=category).order_by('-id')
+            products = Product.objects.filter(category=category)
+      
 
         # 对商品进行分页s
-        paginator = Paginator(products, 1)
+        paginator = Paginator(products, 2)
 
-        # 获取第page页的内容
-        try:
-            page = int(page)
-        except Exception as e:
-            page = 1
-        if page > paginator.num_pages:
-            page = 1
+        page = request.GET.get('page')
 
-        # 获取第page页的paginator.page实例对象
-        products_page = paginator.page(page)
+        productsPage = paginator.get_page(page)
 
-        # todo: 进行页码控制， 页面上最多显示5个页面
-        num_pages = paginator.num_pages
-        if num_pages < 5:
-            pages = range(1, num_pages + 1)
-        elif page <= 3:
-            pages = range(1, 6)
-        elif num_pages - page <= 2:
-            pages = range(num_pages - 4, num_pages + 1)
-        else:
-            pages = range(page - 2, page + 3)
 
         # 获取商品的分类信息
         categories = Category.objects.all()
@@ -133,11 +98,11 @@ class CategoryView(View):
         # 组织上下文
         context = {
             'category': category,
-            'products_page': products_page,
+            'productsPage': productsPage,
             'categories': categories,
             'products': products,
             'sort': sort,
-            'pages': pages,
+            'page': page,
         }
 
 
