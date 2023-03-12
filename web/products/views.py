@@ -13,7 +13,7 @@ class HomePageView(TemplateView):
         return render(request,'home.html',locals())
 
 class ProductListView(View):
-    def get(self, request,  page):
+    def get(self, request):
         """显示列表页"""
         
         # 获取排序方式

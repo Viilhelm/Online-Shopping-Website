@@ -21,7 +21,7 @@ from django.urls import re_path as url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('customers.urls')),
+    
   
     path('', include(('customers.urls', 'customers'), namespace='customers')),
     path('api-auth/', include('rest_framework.urls')),

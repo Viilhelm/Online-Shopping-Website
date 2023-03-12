@@ -24,7 +24,7 @@ class CustomerRegistrationView(View):
             password = self.request.POST.get("password", "default value")
             
             login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
-            return redirect("profileAdd")     
+            return redirect("customers:profileAdd")     
             
         else:
             messages.warning(request,"Invalid Input Data")
@@ -48,7 +48,7 @@ class ProfileAddView(View):
             reg = Customer(user=user, fullName=fullName, phoneNum=phoneNum, address=address)
             reg.save()
             messages.success(request, "Congratulations! User Register Successfully!")
-            return redirect("products/1") 
+            return redirect("products:products") 
         else:
             messages.warning(request,"Invalid Input Data")
         return render(request,'profileAdd.html',locals())
@@ -69,5 +69,5 @@ class CustomerProfileView(View):
 
         context = {
             'profiles': profiles,
-         }
+        }
         return render(request, 'profile.html', context)

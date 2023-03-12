@@ -14,9 +14,7 @@
                 <div class="col-2 mt-3">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                <div class="buttom col-6 mt-4">
-                    <p class="text-center"><a href="{% url 'profile' %}" type="button" class="btn btn-success">Return To Profile</a></p>
-                </div>
+                
 
                 {% if form.non_field_errors %}
                     {% for error in form.non_filed_errors %}

@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="list-group">
-                    <a href="{% url 'products:products' 1 %}" class="list-group-item list-group-item-action" aria-current-"True"> All </a>
+                    <a href="{% url 'products:products'  %}" class="list-group-item list-group-item-action" aria-current-"True"> All </a>
                     {% for category in categories %}
                     <a href="{% url 'products:category' category.id 1 %}" class="list-group-item list-group-item-action" aria-current-"True">
                         {{category.categoryName}}
@@ -17,8 +17,8 @@
             <div class="col-sm-9">
                 <div class="r_wrap fr clearfix">
                     <div class="sort_bar">
-                        <a href="{% url 'products:products'  1 %}?sort=default" {% if sort == 'default' %}class="active"{% endif %}>默认</a>
-                        <a href="{% url 'products:products'  1 %}?sort=price" {% if sort == 'price' %}class="active"{% endif %}>价格</a>
+                        <a href="{% url 'products:products'  %}?sort=default" {% if sort == 'default' %}class="active"{% endif %}>默认</a>
+                        <a href="{% url 'products:products'  %}?sort=price" {% if sort == 'price' %}class="active"{% endif %}>价格</a>
                     </div>
                 </div>
           
@@ -42,7 +42,7 @@
                        
                             <li class="page-item">
                                 {% if productsPage.has_previous %}
-                                    <a class="page-link" href="{% url 'products:products' productsPage.previous_page_number %}?page={{ productsPage.previous_page_number }}&sort={{ sort }}" aria-label="Previous">
+                                    <a class="page-link" href="{% url 'products:products'  %}?page={{ productsPage.previous_page_number }}&sort={{ sort }}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span> 
                                         <span class="sr-only">Previous</span>
                                     </a>
@@ -56,7 +56,7 @@
                                     </li>
                                 {% else %}
                                     <li class="page-item">
-                                        <a class="page-link" href="{% url 'products:products' pindex %}?page={{ pindex }}&sort={{ sort }}">{{ pindex }}</a>
+                                        <a class="page-link" href="{% url 'products:products'  %}?page={{ pindex }}&sort={{ sort }}">{{ pindex }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -64,7 +64,7 @@
 
                             {% if productsPage.has_next %}
                                 <li class="page-item">
-                                    <a class="page-link" href="{% url 'products:products' productsPage.next_page_number %}?page={{ productsPage.next_page_number }}&sort={{ sort }}" aria-label="Next">
+                                    <a class="page-link" href="{% url 'products:products'  %}?page={{ productsPage.next_page_number }}&sort={{ sort }}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                     </a>
