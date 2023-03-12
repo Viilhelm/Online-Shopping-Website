@@ -24,6 +24,26 @@ class Checkout(View):
         purchaseDate = datetime.now()
         purchaseDateString = purchaseDate.strftime("%m/%d/%Y, %H:%M:%S")
         return render(request, 'checkout.html', locals())
+    
+
+
+def OrderCommit(request):
+    totalamount = request.GET.get('totalamount')
+    user = request.user
+    PONumber = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
+    shoppingcart = ShoppingCart.objects.filter(user=user)
+    customer = Customer.objects.get(user=user)
+    models.Order.objects.create(
+        PONumber=PONumber,
+        customer=customer,
+        user=user,
+        status="pending"
+    ).save()
+    order = Order.objects.get(PONumber=PONumber)
+    for sc in shoppingcart:
+        OrderItem(order=order,product=sc.product,price=sc.product.price).save()
+        sc.delete()
+    return redirect('order:order_detail', kwargs={'PONumber' : PONumber})
 
 
 
@@ -68,30 +88,13 @@ class OrdersView(View):
 
         return render(request, 'orders.html', context)
 
-def orderCommit(request):
-    user = request.user
-    PONumber = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
-    addressID = 1
-    shoppingcart = ShoppingCart.objects.filter(user=user)
-    customer = Customer.objects.get(id=1)
-    models.Order.objects.create(
-        PONumber=PONumber,
-        customer=customer,
-        user=user,
-        status="pending"
-    ).save()
-    order = Order.objects.get(PONumber=PONumber)
-    for sc in shoppingcart:
-        OrderItem(order=order,product=sc.product,price=sc.product.price).save()
-        sc.delete()
-    return redirect('order:order_detail', kwargs={'PONumber' : PONumber})
 
 class OrderDetailView(View):
     def get(self, request, PONumber):
         """显示列表页"""
 
         # 获取订单信息
-        customer = Customer.objects.filter(id=1)
+        
         
         order = Order.objects.get(Q(PONumber=PONumber) & Q(user=request.user))
         
@@ -111,8 +114,6 @@ class OrderDetailView(View):
             'order': order,
             'orderitems': orderitems,
             'total':total,
-            'customer':customer,
-            
         }
 
         return render(request, 'order_detail.html', context)

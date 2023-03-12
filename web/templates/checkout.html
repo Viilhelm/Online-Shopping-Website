@@ -23,7 +23,6 @@
                     </div>
                 </div>
             {% endfor %}
-            <p class="fw-bold">Total Cost = {{totalamount}}</p>
         </div>
         <div class="col-sm-4" offset-sm-1>
             <h4>Select Shipping Address</h4>
@@ -33,29 +32,32 @@
                 {% for address in address %}
                     <div class="card">
                         <div class="card-body">
-                            <h5>FullName: {{address.fullName}}</h5>
+                            <P>FullName: {{address.fullName}}</P>
                             <p>Mobile: {{address.phoneNum}}</p>
                             <p>Address: {{address.address}}</p>
                         </div>
                     </div>
-                    <div class="form-check mt-2 mb-5" action="/orderCommit" method="post">
-                        <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{address.id}}" onclick="getValue(this.value)">
-                        <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
-                            Address: {{forloop.counter}}
-                        </label>
+                    {% endfor %}
+                    <div class="form-check mt-2 mb-5" >
+                        
                     </div>
-                {% endfor %}
+                
                 <div class="form-check mb-3">
                     <label for="totalamount" class="form-label" >Total Amount</label>
                     <input type="number" class="form-control" name="totalamount" value={{totalamount}} readonly>
-                    <p>PONumber: {{PONumber}} </p>
-                    <p>Purchasedate: {{purchaseDateString}}</p>
                 </div>
 
-                <form action="/orderCommit" method="post" class="d-inline">
-                    <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-1g text-decoration-none text-white" >Commit</button>
-                </form>
+                
+
+                
                
+            </form>
+
+            <form action="{% url 'order:orderCommit' %}" class="d-inline" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="totalamount" name="totalamount" value="{{totalamount}}" />
+                <input type="submit" value="OK">
+                <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-1g text-decoration-none text-white" >Commit</button>
             </form>
         </div>
     </div>

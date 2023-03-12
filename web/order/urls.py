@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("checkout/", views.Checkout.as_view(), name="checkout"),
     path('orders/', views.OrdersView.as_view(), name="orders"),
-    path("orderCommit/", views.orderCommit, name="orderCommit"),
+    path("orderCommit/", views.OrderCommit, name="orderCommit"),
     path(r'^orders/(?P<PONumber>\w+)$',views.OrderDetailView.as_view(), name='order_detail'),
     
 ]

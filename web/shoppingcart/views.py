@@ -24,43 +24,7 @@ def Cart(request):
     
     return render(request, 'cartAdd.html',locals())
 
-def pluscart(request):
-    if request.method == 'GET':
-        product_id = request.GET.get('product_id')
-        product = Product.objects.get(id=product_id)
-        c = ShoppingCart.objects.get(Q(product=product) & Q(user=request.user))
-        c.quantity += 1
-        c.save()
-        user = request.user
-        shoppingcart = ShoppingCart.objects.filter(user=user)
-        totalamount = 0
-        for p in shoppingcart:
-            value = p.quantity * p.product.price
-            totalamount = totalamount + value
-        data = {
-            'quantity':c.quantity,
-            'totalamount':totalamount
-        }
-        return JsonResponse(data)
-    
-def minuscart(request):
-    if request.method == 'GET':
-        product_id = request.GET.get('product_id')
-        product = Product.objects.get(id=product_id)
-        c = ShoppingCart.objects.get(Q(product=product) & Q(user=request.user))
-        c.quantity -= 1
-        c.save()
-        user = request.user
-        shoppingcart = ShoppingCart.objects.filter(user=user)
-        totalamount = 0
-        for p in shoppingcart:
-            value = p.quantity * p.product.price
-            totalamount = totalamount + value
-        data = {
-            'quantity':c.quantity,
-            'totalamount':totalamount
-        }
-        return JsonResponse(data)
+
   
 def remove_cart(request):
     if request.method == 'GET':
