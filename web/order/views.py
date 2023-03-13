@@ -43,7 +43,7 @@ def OrderCommit(request):
     for sc in shoppingcart:
         OrderItem(order=order,product=sc.product,price=sc.product.price).save()
         sc.delete()
-    return redirect('order:order_detail', kwargs={'PONumber' : PONumber})
+    return redirect('order:order_detail', kwargs={'PONumber':PONumber})
 
 
 
@@ -66,12 +66,12 @@ class OrdersView(View):
             order = Order.objects.get(Q(PONumber=PONumber) & Q(user=request.user))
             orderitems = OrderItem.objects.filter(order=order)
             total = 0
-            totalamount = []
+            
             
             for oi in orderitems:
                 value = oi.price
                 total = total + value
-            totalamount.append(total)
+            
             
 
 
@@ -82,7 +82,7 @@ class OrdersView(View):
         context = {
            
             'orders': orders,
-            'totalamount':totalamount,
+            'total':total,
             
         }
 

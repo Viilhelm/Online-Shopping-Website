@@ -56,7 +56,6 @@
             <form action="{% url 'order:orderCommit' %}" class="d-inline" method="post">
                 {% csrf_token %}
                 <input type="hidden" id="totalamount" name="totalamount" value="{{totalamount}}" />
-                <input type="submit" value="OK">
                 <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-1g text-decoration-none text-white" >Commit</button>
             </form>
         </div>
