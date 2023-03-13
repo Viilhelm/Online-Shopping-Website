@@ -55,12 +55,6 @@ class OrdersView(View):
         
         orders = Order.objects.filter(user=request.user)
 
-        context = {
-           
-            'orders': orders,
-            
-        }
-
         for o in orders:
             PONumber = o.PONumber
             order = Order.objects.get(Q(PONumber=PONumber) & Q(user=request.user))
@@ -71,6 +65,8 @@ class OrdersView(View):
             for oi in orderitems:
                 value = oi.price
                 total = total + value
+
+            
             
             
 
