@@ -43,7 +43,7 @@ def OrderCommit(request):
     for sc in shoppingcart:
         OrderItem(order=order,product=sc.product,price=sc.product.price).save()
         sc.delete()
-    return redirect('order:order_detail', kwargs={'PONumber':PONumber})
+    return redirect('order:order_detail', PONumber = PONumber)
 
 
 
