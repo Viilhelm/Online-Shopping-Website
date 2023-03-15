@@ -53,7 +53,7 @@ class OrdersView(View):
 
         # 获取订单信息
         
-        orders = Order.objects.filter(user=request.user)
+        orders = Order.objects.filter(user=request.user).order_by('-purchaseDate')
 
         for o in orders:
             PONumber = o.PONumber
