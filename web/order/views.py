@@ -52,8 +52,14 @@ class OrdersView(View):
         """显示列表页"""
 
         # 获取订单信息
-        
-        orders = Order.objects.filter(user=request.user).order_by('-purchaseDate')
+        filter = request.GET.get('filter')
+        if filter == 'current':
+            orders = Order.objects.filter(Q(user=request.user) & (Q(status="pending") | Q(status="hold"))).order_by('-purchaseDate')
+        elif filter == 'past':
+            orders = Order.objects.filter(Q(user=request.user) & (Q(status="shipped") | Q(status="cancelled"))).order_by('-purchaseDate')
+        else:
+            filter == 'all'
+            orders = Order.objects.filter(user=request.user).order_by('-purchaseDate')
 
         for o in orders:
             PONumber = o.PONumber
@@ -66,13 +72,6 @@ class OrdersView(View):
                 value = oi.price
                 total = total + value
 
-            
-            
-            
-
-
-        
-        
 
       # 组织上下文
         context = {
@@ -83,6 +82,8 @@ class OrdersView(View):
         }
 
         return render(request, 'orders.html', context)
+    
+
 
 
 class OrderDetailView(View):

@@ -4,31 +4,44 @@
 {% block main-content %}
 <div class="container my-5">
     <div class="row">
-        <div class="col-sm-2 border-end">
-            <ul class="list-unstyled">
-                <li class="d-grid"><a href="{% url 'order:orders' %}" class="btn btn-primary">Orders</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-9 offset-sm-1">
-            {% for order in orders %}
-            <a href="{% url 'order:order_detail' order.PONumber  %}">
-            
+        {% if orders %}
+            <div class="col-sm-2 border-end">
+                <ul class="list-unstyled">
+                    <li class="d-grid"><a href="{% url 'order:orders' %}?filter=all" class="btn btn-primary" {% if filter == 'all' %}class="active"{% endif %}>All Orders</a></li>
+                    <li class="d-grid"><a href="{% url 'order:orders' %}?filter=current" class="btn" {% if filter == 'current' %}class="active"{% endif %}>Current Purchases</a></li>
+                    <li class="d-grid"><a href="{% url 'order:orders' %}?filter=past" class="btn" {% if filter == 'past' %}class="active"{% endif %}>Past Purchases</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-9 offset-sm-1">
+                <div class="acss">
+                    {% for order in orders %}
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="{% url 'order:order_detail' order.PONumber  %}" >
+                                
 
-               
-                <div class="col-sm-7">
-                    <p>PONumber: {{order.PONumber}}</p>
-                    <p>Purchase Date: {{order.purchaseDate}}</p>
+                                
+                                    <div class="col-sm-7">
+                                        <p>PONumber: {{order.PONumber}}</p>
+                                        <p>Purchase Date: {{order.purchaseDate}}</p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <p>Order Status: {{order.status}}</p>
+                                        
+                                            
+                                        <p>Total: {{total}}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <br>
+
+                    {% endfor %}
                 </div>
-                <div class="col-sm">
-                    <p>Order Status: {{order.status}}</p>
-                    
-                        
-                    <p>Total: {{total}}</p>
-                </div>
-            </a>
-            <hr>
-            {% endfor %}
-        </div>
+            </div>
+        {% else %}
+            <h1 class="text-center mb-5">Orders is empty.</h1>
+        {% endif %}
     </div>
 </div>
 {% endblock main-content %}
