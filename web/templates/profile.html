@@ -3,25 +3,39 @@
 {% block title %}Profile{% endblock title %}
 {% block main-content %}
 
-<div class="container my-5>
+
+<div class="container my-5">
+
     
-    <div class="col-sm-8 offset-sm-1">
-        <div class="row">
-            {% for profile in profiles %}
-            <div class="col-sm-6"} 
-                <div class="card m-2">
-                    <div class="card-body">
-                        <P>Username: {{profile.user.username}} <p>
-                        <P>Email: {{profile.user.email}} <p>
-                        <p>Full Name: {{profile.fullName}} </p>
-                        <p>Phone Number: {{profile.phoneNum}} </p>
-                        <p>Address: {{profile.address}} </p>
+    <div class="row">
+       
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled">
+                <li class="d-grid"><a href="{% url 'customers:profile' %}" class="btn btn-primary">Profile</a></li>
+            </ul>
+        </div>
+        
+        <div class="col-sm-8 offset-sm-1">
+            <div class="row">
+                {% for profile in profiles %}
+                <div class="col-sm-6"} 
+                    <div class="card m-2">
+                        <div class="card-body">
+                            <P>Username: {{profile.user.username}} <p>
+                            <P>Email: {{profile.user.email}} <p>
+                            <p>Full Name: {{profile.fullName}} </p>
+                            <p>Phone Number: {{profile.phoneNum}} </p>
+                            <p>Address: {{profile.address}} </p>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
+
     </div>
+
     
 </div>
+
 {% endblock main-content %}
