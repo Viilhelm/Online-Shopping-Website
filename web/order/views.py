@@ -50,23 +50,23 @@ def OrderCommit(request):
 class OrdersView(View):
     def get(self, request):
         """显示列表页"""
+        user = request.user
 
         # 获取订单信息
         filter = request.GET.get('filter')
         if filter == 'current':
-            orders = Order.objects.filter(Q(user=request.user) & (Q(status="pending") | Q(status="hold"))).order_by('-purchaseDate')
+            orders = Order.objects.filter(Q(user=user) & (Q(status="pending") | Q(status="hold"))).order_by('-purchaseDate')
         elif filter == 'past':
-            orders = Order.objects.filter(Q(user=request.user) & (Q(status="shipped") | Q(status="cancelled"))).order_by('-purchaseDate')
+            orders = Order.objects.filter(Q(user=user) & (Q(status="shipped") | Q(status="cancelled"))).order_by('-purchaseDate')
         else:
             filter == 'all'
-            orders = Order.objects.filter(user=request.user).order_by('-purchaseDate')
+            orders = Order.objects.filter(user=user).order_by('-purchaseDate')
 
+        total = 0
         for o in orders:
             PONumber = o.PONumber
-            order = Order.objects.get(Q(PONumber=PONumber) & Q(user=request.user))
+            order = Order.objects.get(Q(PONumber=PONumber) & Q(user=user))
             orderitems = OrderItem.objects.filter(order=order)
-            total = 0
-            
             
             for oi in orderitems:
                 value = oi.price

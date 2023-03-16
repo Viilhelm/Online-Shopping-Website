@@ -4,15 +4,15 @@
 {% block main-content %}
 <div class="container my-5">
     <div class="row">
-        {% if orders %}
-            <div class="col-sm-2 border-end">
-                <ul class="list-unstyled">
-                    <li class="d-grid"><a href="{% url 'order:orders' %}?filter=all" class="btn btn-primary" {% if filter == 'all' %}class="active"{% endif %}>All Orders</a></li>
-                    <li class="d-grid"><a href="{% url 'order:orders' %}?filter=current" class="btn" {% if filter == 'current' %}class="active"{% endif %}>Current Purchases</a></li>
-                    <li class="d-grid"><a href="{% url 'order:orders' %}?filter=past" class="btn" {% if filter == 'past' %}class="active"{% endif %}>Past Purchases</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-9 offset-sm-1">
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled">
+                <li class="d-grid"><a href="{% url 'order:orders' %}?filter=all" class="btn btn-primary" {% if filter == 'all' %}class="active"{% endif %}>All Orders</a></li>
+                <li class="d-grid"><a href="{% url 'order:orders' %}?filter=current" class="btn" {% if filter == 'current' %}class="active"{% endif %}>Current Purchases</a></li>
+                <li class="d-grid"><a href="{% url 'order:orders' %}?filter=past" class="btn" {% if filter == 'past' %}class="active"{% endif %}>Past Purchases</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 offset-sm-1">
+            {% if orders %}
                 <div class="acss">
                     {% for order in orders %}
                         <div class="card">
@@ -38,10 +38,11 @@
 
                     {% endfor %}
                 </div>
-            </div>
-        {% else %}
-            <h1 class="text-center mb-5">Orders is empty.</h1>
-        {% endif %}
+            {% else %}
+                <h1 class="text-center mb-5">Orders are empty.</h1>
+            {% endif %}
+        </div>
+    
     </div>
 </div>
 {% endblock main-content %}
