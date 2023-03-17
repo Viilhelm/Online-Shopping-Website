@@ -6,9 +6,18 @@
     <div class="row">
         <div class="col-sm-2 border-end">
             <ul class="list-unstyled">
-                <li class="d-grid"><a href="{% url 'order:orders' %}?filter=all" class="btn btn-primary" {% if filter == 'all' %}class="active"{% endif %}>All Orders</a></li>
-                <li class="d-grid"><a href="{% url 'order:orders' %}?filter=current" class="btn" {% if filter == 'current' %}class="active"{% endif %}>Current Purchases</a></li>
-                <li class="d-grid"><a href="{% url 'order:orders' %}?filter=past" class="btn" {% if filter == 'past' %}class="active"{% endif %}>Past Purchases</a></li>
+                {% for group in request.user.groups.all %}
+                    {% if group.name == 'Customer' %}
+                        <li class="d-grid"><a href="{% url 'order:orders' %}?filter=all" class="btn btn-primary" {% if filter == 'all' %}class="active"{% endif %}>All Orders</a></li>
+                        <li class="d-grid"><a href="{% url 'order:orders' %}?filter=current" class="btn" {% if filter == 'current' %}class="active"{% endif %}>Current Purchases</a></li>
+                        <li class="d-grid"><a href="{% url 'order:orders' %}?filter=past" class="btn" {% if filter == 'past' %}class="active"{% endif %}>Past Purchases</a></li>
+                    {% elif group.name == 'Vendor' %}
+                        <li class="d-grid"><a href="{% url 'order:orders' %}?filter=all" class="btn btn-primary" {% if filter == 'all' %}class="active"{% endif %}>All Orders</a></li>
+                        <li class="d-grid"><a href="{% url 'order:orders' %}?filter=pending" class="btn" {% if filter == 'pending' %}class="active"{% endif %}>Pending Orders</a></li>
+                        <li class="d-grid"><a href="{% url 'order:orders' %}?filter=pending" class="btn" {% if filter == 'hold' %}class="active"{% endif %}>Orders On Hold</a></li>
+                        <li class="d-grid"><a href="{% url 'order:orders' %}?filter=past" class="btn" {% if filter == 'past' %}class="active"{% endif %}>Past Orders</a></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
         <div class="col-sm-9 offset-sm-1">
@@ -24,6 +33,11 @@
                                     <div class="col-sm-7">
                                         <p>PONumber: {{order.PONumber}}</p>
                                         <p>Purchase Date: {{order.purchaseDate}}</p>
+                                        {% for group in request.user.groups.all %}
+                                            {% if group.name == 'Vendor' %}
+                                                <p>Customer Name: {{order.customer.fullName}}</p>
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
                                     <div class="col-sm">
                                         <p>Order Status: {{order.status}}</p>

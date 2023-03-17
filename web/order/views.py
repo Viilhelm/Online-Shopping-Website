@@ -58,6 +58,10 @@ class OrdersView(View):
             orders = Order.objects.filter(Q(user=user) & (Q(status="pending") | Q(status="hold"))).order_by('-purchaseDate')
         elif filter == 'past':
             orders = Order.objects.filter(Q(user=user) & (Q(status="shipped") | Q(status="cancelled"))).order_by('-purchaseDate')
+        elif filter == 'pending':
+            orders = Order.objects.filter(Q(user=user) & Q(status="pending")).order_by('-purchaseDate')
+        elif filter == 'hold':
+            orders = Order.objects.filter(Q(user=user) & Q(status="hold")).order_by('-purchaseDate')
         else:
             filter == 'all'
             orders = Order.objects.filter(user=user).order_by('-purchaseDate')
