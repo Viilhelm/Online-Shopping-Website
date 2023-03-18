@@ -17,14 +17,14 @@
                 <h5> Introduction: {{product.introduction}} </h5>
 
                 {% for group in request.user.groups.all %}
-                {% if group.name == 'Customer' %}
-                <form action="/cartAdd" class="d-inline">
-                    <input type="hidden" id="product_id" name="product_id" value="{{product.id}}" />
-                    <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-1g text-decoration-none text-white" >Add to Cart</button>
-                </form>
+                    {% if group.name == 'Customer' %}
+                        <form action="/cartAdd" class="d-inline">
+                            <input type="hidden" id="product_id" name="product_id" value="{{product.id}}" />
+                            <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-1g text-decoration-none text-white" >Add to Cart</button>
+                        </form>
 
-            
-                {% endif %}
+                
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

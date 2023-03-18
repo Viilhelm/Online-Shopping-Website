@@ -8,5 +8,6 @@ urlpatterns = [
     path('orders/', views.OrdersView.as_view(), name="orders"),
     path("orderCommit/", views.OrderCommit, name="orderCommit"),
     path('orders/<str:PONumber>',views.OrderDetailView.as_view(), name='order_detail'),
+    path("vendorShip/", views.vendorShip, name="vendorShip"),
     
 ]

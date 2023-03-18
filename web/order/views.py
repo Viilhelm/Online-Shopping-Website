@@ -20,9 +20,6 @@ class Checkout(View):
         for p in shoppingcart:
             value = p.quantity * p.product.price
             totalamount = totalamount + value
-        
-        purchaseDate = datetime.now()
-        purchaseDateString = purchaseDate.strftime("%m/%d/%Y, %H:%M:%S")
         return render(request, 'checkout.html', locals())
     
 
@@ -120,3 +117,11 @@ class OrderDetailView(View):
         }
 
         return render(request, 'order_detail.html', context)
+    
+def vendorShip(request):
+    status = request.GET.get('status')
+    PONumber = request.GET.get('PONumber')
+    shipmentDate = datetime.now()
+    Order.objects.filter(PONumber=PONumber).update(status=status,shipmentDate=shipmentDate)
+
+    return redirect('order:order_detail', PONumber = PONumber)
