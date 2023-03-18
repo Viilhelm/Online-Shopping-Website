@@ -9,5 +9,6 @@ urlpatterns = [
     path("orderCommit/", views.OrderCommit, name="orderCommit"),
     path('orders/<str:PONumber>',views.OrderDetailView.as_view(), name='order_detail'),
     path("vendorShip/", views.vendorShip, name="vendorShip"),
+    path("searchOrder/", views.searchOrder, name="searchOrder"),
     
 ]

@@ -61,6 +61,8 @@ class OrdersView(View):
             orders = Order.objects.filter(status="hold").order_by('-purchaseDate')
         elif filter == 'pastOrders':
             orders = Order.objects.filter(Q(status="shipped") | Q(status="cancelled")).order_by('-purchaseDate')
+        elif filter == 'allVendor':
+            orders = Order.objects.all().order_by('-purchaseDate')
         else:
             filter == 'all'
             orders = Order.objects.filter(user=user).order_by('-purchaseDate')
@@ -125,3 +127,8 @@ def vendorShip(request):
     Order.objects.filter(PONumber=PONumber).update(status=status,shipmentDate=shipmentDate)
 
     return redirect('order:order_detail', PONumber = PONumber)
+
+def searchOrder(request):
+    query = request.GET['search']
+    orders = Order.objects.filter(Q(PONumber__icontains=query))
+    return render(request, "searchOrder.html", locals())
