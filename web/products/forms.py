@@ -13,5 +13,6 @@ class ProductsAddForm(forms.ModelForm):
             'publisher':forms.TextInput(attrs={'class':'form-control'}),
             'introduction':forms.TextInput(attrs={'class':'form-control'}),
             'image':forms.ClearableFileInput(attrs={'class':'form-control'}),
+            'catgegory':forms.Select(attrs={'class':'form-control'}),
 
         }

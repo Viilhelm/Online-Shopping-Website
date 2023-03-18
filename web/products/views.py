@@ -148,7 +148,7 @@ class productsAddView(View):
         form = ProductsAddForm()
         return render(request,'productsAdd.html',locals())
     def post(self,request):
-        form = ProductsAddForm(request.POST)
+        form = ProductsAddForm(request.POST, request.FILES)
         if form.is_valid():
             productName = form.cleaned_data['productName']
             price = form.cleaned_data['price']
@@ -156,12 +156,13 @@ class productsAddView(View):
             author = form.cleaned_data['author']
             publisher = form.cleaned_data['publisher']
             introduction = form.cleaned_data['introduction']
-            image = form.changed_data['image']
+            image = form.cleaned_data['image']
+            category = form.cleaned_data['category']
             
 
-            reg = Product(productName=productName, price=price, ISBN=ISBN, author=author, publisher=publisher, introduction=introduction, image=image)
+            reg = Product(productName=productName, price=price, ISBN=ISBN, author=author, publisher=publisher, introduction=introduction, image=image, category=category)
             reg.save()
-            messages.success(request, "Congratulations! Add A Product Successfully!")
+            
             return redirect("products:products") 
         else:
             messages.warning(request,"Invalid Input Data")
