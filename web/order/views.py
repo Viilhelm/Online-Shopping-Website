@@ -59,9 +59,11 @@ class OrdersView(View):
         elif filter == 'past':
             orders = Order.objects.filter(Q(user=user) & (Q(status="shipped") | Q(status="cancelled"))).order_by('-purchaseDate')
         elif filter == 'pending':
-            orders = Order.objects.filter(Q(user=user) & Q(status="pending")).order_by('-purchaseDate')
+            orders = Order.objects.filter(status="pending").order_by('-purchaseDate')
         elif filter == 'hold':
-            orders = Order.objects.filter(Q(user=user) & Q(status="hold")).order_by('-purchaseDate')
+            orders = Order.objects.filter(status="hold").order_by('-purchaseDate')
+        elif filter == 'pastOrders':
+            orders = Order.objects.filter(Q(status="shipped") | Q(status="cancelled")).order_by('-purchaseDate')
         else:
             filter == 'all'
             orders = Order.objects.filter(user=user).order_by('-purchaseDate')
@@ -69,7 +71,7 @@ class OrdersView(View):
         total = 0
         for o in orders:
             PONumber = o.PONumber
-            order = Order.objects.get(Q(PONumber=PONumber) & Q(user=user))
+            order = Order.objects.get(PONumber=PONumber)
             orderitems = OrderItem.objects.filter(order=order)
             
             for oi in orderitems:
