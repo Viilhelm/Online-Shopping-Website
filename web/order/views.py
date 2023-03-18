@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.db import transaction
 from datetime import datetime
 from order import models
+from django.http import HttpResponse
 
 # Create your views here.
 class Checkout(View):
@@ -129,6 +130,9 @@ def vendorShip(request):
     return redirect('order:order_detail', PONumber = PONumber)
 
 def searchOrder(request):
-    query = request.GET['search']
-    orders = Order.objects.filter(Q(PONumber__icontains=query))
-    return render(request, "searchOrder.html", locals())
+    if 'search' in request.GET and request.GET['search']:
+        query = request.GET['search']
+        orders = Order.objects.filter(PONumber__icontains=query)
+        return render(request, "searchOrder.html", {'orders': orders, "search": query})
+    else:
+        return HttpResponse("Please submit a search term.")
