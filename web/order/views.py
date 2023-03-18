@@ -132,7 +132,8 @@ def vendorShip(request):
 def searchOrder(request):
     if 'search' in request.GET and request.GET['search']:
         query = request.GET['search']
-        orders = Order.objects.filter(PONumber__icontains=query)
-        return render(request, "searchOrder.html", {'orders': orders, "search": query})
+        status = request.GET.get('status')
+        orders = Order.objects.filter(Q(PONumber__icontains=query) & Q(status=status))
+        return render(request, "searchOrder.html", {'orders': orders, "search": query, "status": status})
     else:
         return HttpResponse("Please submit a search term.")
