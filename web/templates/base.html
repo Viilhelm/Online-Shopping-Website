@@ -40,30 +40,33 @@
                
                   {% for group in request.user.groups.all %}
                     {% if group.name == 'Vendor' %}
-                    <li class="nav-item dropdown mx-2">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ user.username }}
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'order:orders' %}">Orders</a></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                      </ul>
-                  </li>
-
-                    {% elif group.name == 'Customer' %}
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="{% url 'shoppingcart' %}">Shopping Cart</a>
-                    </li>
-                    <li class="nav-item dropdown mx-2">
+                      <li class="nav-item dropdown mx-2">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           {{ user.username }}
                         </a>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="{% url 'customers:profile' %}">Profile</a></li>
                           <li><a class="dropdown-item" href="{% url 'order:orders' %}">Orders</a></li>
                           <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         </ul>
-                    </li>
+                      </li>
+                      <li class="nav-item mx-2">
+                        <a class="nav-link text-white" href="{% url 'products:productsAdd' %}">Add A New Product</a>
+                      </li>
+
+                    {% elif group.name == 'Customer' %}
+                      <li class="nav-item mx-2">
+                          <a class="nav-link text-white" href="{% url 'shoppingcart' %}">Shopping Cart</a>
+                      </li>
+                      <li class="nav-item dropdown mx-2">
+                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user.username }}
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'customers:profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'order:orders' %}">Orders</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                          </ul>
+                      </li>
 
                   
                     {% endif %}

@@ -11,5 +11,6 @@ urlpatterns = [
     path(r'^products/(?P<category_id>\d+)/(?P<page>\d+)$',views.CategoryView.as_view(), name='category'),
     path('produtcs/<int:pk>',views.ProductDetailView.as_view(), name='product_detail'),
     path("searchProducts/", views.searchProducts, name="searchProducts"),
+    path("productsAdd/", views.productsAddView.as_view(), name="productsAdd"),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,6 +5,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.db.models import Q
+from .forms import ProductsAddForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -140,3 +142,27 @@ def searchProducts(request):
         return render(request, "searchProducts.html", locals())
     else:
         return HttpResponse("Please submit a search term.")
+    
+class productsAddView(View):
+    def get(self,request):
+        form = ProductsAddForm()
+        return render(request,'productsAdd.html',locals())
+    def post(self,request):
+        form = ProductsAddForm(request.POST)
+        if form.is_valid():
+            productName = form.cleaned_data['productName']
+            price = form.cleaned_data['price']
+            ISBN = form.cleaned_data['ISBN']
+            author = form.cleaned_data['author']
+            publisher = form.cleaned_data['publisher']
+            introduction = form.cleaned_data['introduction']
+            image = form.changed_data['image']
+            
+
+            reg = Product(productName=productName, price=price, ISBN=ISBN, author=author, publisher=publisher, introduction=introduction, image=image)
+            reg.save()
+            messages.success(request, "Congratulations! Add A Product Successfully!")
+            return redirect("products:products") 
+        else:
+            messages.warning(request,"Invalid Input Data")
+        return render(request,'productsAdd.html',locals())
