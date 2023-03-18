@@ -68,23 +68,22 @@ class OrdersView(View):
             filter == 'all'
             orders = Order.objects.filter(user=user).order_by('-purchaseDate')
 
-        total = 0
+        total = []
         for o in orders:
             PONumber = o.PONumber
             order = Order.objects.get(PONumber=PONumber)
             orderitems = OrderItem.objects.filter(order=order)
-            
+            sum = 0
             for oi in orderitems:
-                value = oi.price
-                total = total + value
+                sum = sum + oi.price
+            total.append(sum)
+        orderZip = zip(orders,total)
+            
 
 
       # 组织上下文
         context = {
-           
-            'orders': orders,
-            'total':total,
-            
+           'orderZip': orderZip,
         }
 
         return render(request, 'orders.html', context)
@@ -105,7 +104,7 @@ class OrderDetailView(View):
             orders = Order.objects.filter(user=request.user).order_by('-purchaseDate')
         
         
-        order = Order.objects.get(Q(PONumber=PONumber) & Q(user=request.user))
+        order = Order.objects.get(PONumber=PONumber)
         
         orderitems = OrderItem.objects.filter(order=order)
 

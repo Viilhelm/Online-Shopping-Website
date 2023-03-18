@@ -45,7 +45,7 @@
                           {{ user.username }}
                         </a>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="{% url 'order:orders' %}">Orders</a></li>
+                          <li><a class="dropdown-item" href="{% url 'order:orders' %}?filter=allVendor">Orders</a></li>
                           <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                       </li>
