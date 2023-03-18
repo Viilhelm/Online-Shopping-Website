@@ -122,12 +122,21 @@ class ProductDetailView(DetailView):
 
 
     
-class SearchResultsView(ListView):
-    model = Product
-    template_name = 'search_results.html'
-    def get_queryset(self):  # new
-        query = self.request.GET.get("q")
-        object_list = Product.objects.filter(
-            Q(productName__icontains=query) | Q(id__icontains=query)
-        )
-        return object_list
+def searchProducts(request):
+    if 'search' in request.GET and request.GET['search']:
+        query = request.GET['search']
+        categories = Category.objects.all()
+
+        products = Product.objects.filter(Q(productName__icontains=query) & Q(id__icontains=query))
+        
+
+        # 对商品进行分页s
+        paginator = Paginator(products, 2)
+
+        page = request.GET.get('page')
+
+        productsPage = paginator.get_page(page)
+        
+        return render(request, "searchProducts.html", locals())
+    else:
+        return HttpResponse("Please submit a search term.")

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search Products{% endblock title %}
+{% block main-content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group">
+                    <a href="{% url 'products:products'  %}" class="list-group-item list-group-item-action" aria-current-"True"> All </a>
+                    {% for category in categories %}
+                    <a href="{% url 'products:category' category.id 1 %}" class="list-group-item list-group-item-action" aria-current-"True">
+                        {{category.categoryName}}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-9">
+                
+          
+                <div class="row">
+                    {% for product in productsPage %}
+                        <div class="col text-center mb-4">
+                            <a href="{% url 'products:product_detail' product.id %}" class="btn">
+                                <div>
+                                    <img src="{{product.image.url}}" width="200px" height="300px">
+                                    <div class="fw-bold">Name: 《{{product.productName}}》</div>
+                                    <div class="fw-bold text-danger">Price: ${{product.price}}</div>
+                                    <div class="fw-bold">Category: {{product.category.categoryName}}</div>
+                                </div>
+                            </a>
+                        </div>  
+                    {% endfor %}  
+                </div>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                       
+                            <li class="page-item">
+                                {% if productsPage.has_previous %}
+                                    <a class="page-link" href="{% url 'products:products'  %}?page={{ productsPage.previous_page_number }}&sort={{ sort }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span> 
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                {% endif %}
+                            </li>
+                                
+                            {% for pindex in productsPage.paginator.page_range %}
+                                {% if pindex == productsPage.number %}
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">{{ pindex }} <span class="sr-only">(current)</span></a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{% url 'products:products'  %}?page={{ pindex }}&sort={{ sort }}">{{ pindex }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+
+                            {% if productsPage.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{% url 'products:products'  %}?page={{ productsPage.next_page_number }}&sort={{ sort }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+
+                       
+                    </ul>
+                </nav>
+
+                            
+
+            </div>     
+        </div>
+    </div>
+{% endblock main-content %}
