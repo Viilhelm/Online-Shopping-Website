@@ -97,6 +97,12 @@ class OrderDetailView(View):
         """显示列表页"""
 
         # 获取订单信息
+        filter = request.GET.get('filter')
+        if filter == 'allVendor':
+            orders = Order.objects.all().order_by('-purchaseDate')
+        else:
+            filter == 'all'
+            orders = Order.objects.filter(user=request.user).order_by('-purchaseDate')
         
         
         order = Order.objects.get(Q(PONumber=PONumber) & Q(user=request.user))
