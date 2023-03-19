@@ -14,8 +14,8 @@ def CartAdd(request):
     shoppingcart = ShoppingCart.objects.filter(user=user)
     for sc in shoppingcart:
         if sc.product.id == product.id:
-            messages.warning(request,"Product already exists.")
             return render(request,'product_detail.html',locals())
+            
             
     else:
         ShoppingCart(user=user, product=product).save()
