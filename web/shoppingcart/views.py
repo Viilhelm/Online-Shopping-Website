@@ -3,16 +3,25 @@ from django.views.generic.base import View
 from django.http import JsonResponse
 from products.models import Product
 from shoppingcart.models import ShoppingCart
-from django_redis import get_redis_connection
 from django.db.models import Q
+from django.contrib import messages
 
 # Create your views here.
 def CartAdd(request):
     user = request.user
     product_id = request.GET.get('product_id')
     product = Product.objects.get(id=product_id)
-    ShoppingCart(user=user, product=product).save()
-    return redirect('/shoppingcart')
+    shoppingcart = ShoppingCart.objects.filter(user=user)
+    for sc in shoppingcart:
+        if sc.product.id == product.id:
+            messages.warning(request,"Product already exists.")
+            return render(request,'product_detail.html',locals())
+            
+    else:
+        ShoppingCart(user=user, product=product).save()
+        return redirect('/shoppingcart')
+
+    
 
 def Cart(request):
     user = request.user
