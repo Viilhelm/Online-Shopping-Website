@@ -17,15 +17,15 @@
             {% for item in shoppingcart %}
                 <div class="card mb-2">
                     <div class="card-body">
-                        <h5>Product: {{item.product.productName}}</h5>
+                        <h5>Product: 《{{item.product.productName}}》</h5>
                         <p>Quantity: {{item.quantity}}</p>
-                        <p class="fw-bold">Price: {{item.product.price}}</p>
+                        <p class="fw-bold">Price: ${{item.product.price}}</p>
                     </div>
                 </div>
             {% endfor %}
         </div>
         <div class="col-sm-4" offset-sm-1>
-            <h4>Select Shipping Address</h4>
+            <h4>Shipping Address</h4>
             <hr>
             <form method="post" id="myform">
                 {% csrf_token %}
@@ -43,7 +43,7 @@
                     </div>
                 
                 <div class="form-check mb-3">
-                    <label for="totalamount" class="form-label" >Total Amount</label>
+                    <label for="totalamount" class="form-label" >Total Amount ($)</label>
                     <input type="number" class="form-control" name="totalamount" value={{totalamount}} readonly>
                 </div>
 
