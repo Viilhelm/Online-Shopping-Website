@@ -22,10 +22,10 @@
                     <div class="card-body">
                 
                         <div class="col-sm-7">
-                            <p>Name: {{item.product.productName}}</p>
+                            <p>Name: 《{{item.product.productName}}》</p>
                             <p>Quantity: 1 </p>
-                            <p>Price: {{item.price}}</p>
-                            <p>Subtotal: {{item.price}}</p>
+                            <p>Price: ${{item.price}}</p>
+                            <p>Subtotal: ${{item.price}}</p>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 <p>Customer Name: {{c.fullName}}</P>
                 <p>Shipping Address: {{c.adress}}</p>
             {% endfor %}
-            <h3>Total: {{total}}</h3>
+            <h3>Total: ${{total}}</h3>
             {% for group in request.user.groups.all %}
                 {% if group.name == 'Vendor' %}
                     <form action="/vendorShip" class="d-inline">
