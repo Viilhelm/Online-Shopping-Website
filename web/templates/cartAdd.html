@@ -13,18 +13,24 @@
                         {% for item in shoppingcart %}
                             <div class="row">
                                 <div class="col-sm-3 text-center align-self-center">
+                                    <a href="{% url 'products:product_detail' item.product.id %}" class="btn">
                                     <img src="{{item.product.image.url}}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150">
+                                    </a>
                                 </div>
                                 <div class="col-sm-9">
                                     <div>
-                                        <h5>Name: {{item.product.productName}}</h5>
-                                        <p class-"mb-0"><span><strong>Price: ${{item.product.price}}</strong></span></p>
-                                        <div class='my-3'>
-                                            <label for="quantity">Quantity:</label>
+                                        <a href="{% url 'products:product_detail' item.product.id %}" style="text-decoration:none; color:black">
+                                            <div style="height:180px">
                                             
-                                                <span id="quantity">{{item.quantity}}</span>
+                                                <h5>Name: 《{{item.product.productName}}》</h5>
+                                                <p>Quantity: {{item.quantity}}</p>
+                                                <p><strong>Price: ${{item.product.price}}</strong></p>
+                                                
                                             
-                                        </div>
+                                            </div>
+                                        </a>
+                                        
+                                    
                                 
                                         <div class="d-flex justify-content-between">
 
