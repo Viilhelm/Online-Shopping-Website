@@ -84,6 +84,7 @@ class OrdersView(View):
       # 组织上下文
         context = {
            'orderZip': orderZip,
+           'orders':orders,
         }
 
         return render(request, 'orders.html', context)

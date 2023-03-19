@@ -21,29 +21,33 @@
             </ul>
         </div>
         <div class="col-sm-9 offset-sm-1">
-            {% if orderZip %}
+            {% if orders %}
                 
                 <div class="acss">
                     {% for order,total in orderZip %}
-                        {% if forloop.first %}
-                            <div class="container-fluid " >
-                                <form class="d-flex" role="search" action="{% url 'order:searchOrder' %}" method="get">
-                                <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search">
-                                <input type="hidden" id="status" name="status" value="{{order.status}}">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
-                                </form>
-                            </div>
-                            <br>
-                        {% else %}
-                            <div class="container-fluid " >
-                                <form class="d-flex" role="search" action="{% url 'order:searchOrder' %}" method="get">
-                                <input class="form-control me-2" type="hidden" name="search" placeholder="Search" aria-label="Search">
-                                <input type="hidden" id="status" name="status" value="{{order.status}}">
-                                </form>
-                            </div>
-                            <br>
+                        {% for group in request.user.groups.all %}
+                            {% if group.name == 'Vendor' %}
+                                {% if forloop.first %}
+                                    <div class="container-fluid " >
+                                        <form class="d-flex" role="search" action="{% url 'order:searchOrder' %}" method="get">
+                                        <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search">
+                                        <input type="hidden" id="status" name="status" value="{{order.status}}">
+                                        <button class="btn btn-outline-success" type="submit">Search</button>
+                                        </form>
+                                    </div>
+                                    <br>
+                                {% else %}
+                                    <div class="container-fluid " >
+                                        <form class="d-flex" role="search" action="{% url 'order:searchOrder' %}" method="get">
+                                        <input class="form-control me-2" type="hidden" name="search" placeholder="Search" aria-label="Search">
+                                        <input type="hidden" id="status" name="status" value="{{order.status}}">
+                                        </form>
+                                    </div>
+                                    <br>
 
-                        {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
                         
                         <div class="card">
                             <div class="card-body">
