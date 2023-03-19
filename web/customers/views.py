@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomerRegistrationForm, CustomerProfileAddForm
 from django.contrib import messages
 from .models import Customer
