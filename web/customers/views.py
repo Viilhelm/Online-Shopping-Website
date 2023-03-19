@@ -47,7 +47,7 @@ class ProfileAddView(View):
 
             reg = Customer(user=user, fullName=fullName, phoneNum=phoneNum, address=address)
             reg.save()
-            messages.success(request, "Congratulations! User Register Successfully!")
+            
             return redirect("products:products") 
         else:
             messages.warning(request,"Invalid Input Data")
