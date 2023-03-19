@@ -162,8 +162,9 @@ class productsAddView(View):
 
             reg = Product(productName=productName, price=price, ISBN=ISBN, author=author, publisher=publisher, introduction=introduction, image=image, category=category)
             reg.save()
+            pk = reg.pk
             
-            return redirect("products:products") 
+            return redirect("products:product_detail", pk = pk) 
         else:
             messages.warning(request,"Invalid Input Data")
         return render(request,'productsAdd.html',locals())

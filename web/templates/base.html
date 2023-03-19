@@ -29,11 +29,15 @@
                 <a class="nav-link text-white" href="{% url 'products:products' %}">Products</a>
               </li>
             </ul>
+            {% for group in request.user.groups.all %}
+              {% if group.name == 'Vendor' %}
             
-            <form class="d-flex" role="search" action="{% url 'products:searchProducts' %}" method="get">
-              <input class="form-control me-2" type="text" placeholder="Search" name="search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+                <form class="d-flex" role="search" action="{% url 'products:searchProducts' %}" method="get">
+                  <input class="form-control me-2" type="text" placeholder="Search" name="search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              {% endif %}
+            {% endfor %}
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               {% if user.is_authenticated %}
@@ -85,10 +89,13 @@
       </nav>
 
       {% block main-content %}{% endblock main-content %}
-
-    <footer class="container-fluid fixed-bottom bg-success text-center p-2 mt-5">
-        Copyright
-    </footer>
+      
+      <div>
+        <div style="height:60px"></div>
+        <footer class="container-fluid fixed-bottom bg-success text-center p-2 mt-5">
+            Copyright
+        </footer>
+      </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
