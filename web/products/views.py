@@ -129,7 +129,7 @@ def searchProducts(request):
         query = request.GET['search']
         categories = Category.objects.all()
 
-        products = Product.objects.filter(Q(productName__icontains=query) & Q(id__icontains=query))
+        products = Product.objects.filter(Q(productName__icontains=query) | Q(id__exact=query))
         
 
         # 对商品进行分页s

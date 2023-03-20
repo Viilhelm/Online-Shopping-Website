@@ -11,7 +11,7 @@ class ProductsAddForm(forms.ModelForm):
             'ISBN':forms.TextInput(attrs={'class':'form-control'}),
             'author':forms.TextInput(attrs={'class':'form-control'}),
             'publisher':forms.TextInput(attrs={'class':'form-control'}),
-            'introduction':forms.TextInput(attrs={'class':'form-control'}),
+            'introduction':forms.Textarea(attrs={'class':'form-control'}),
             'image':forms.ClearableFileInput(attrs={'class':'form-control'}),
             'catgegory':forms.Select(attrs={'class':'form-control'}),
 
