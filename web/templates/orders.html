@@ -27,7 +27,7 @@
                     {% for order,total in orderZip %}
                         {% for group in request.user.groups.all %}
                             {% if group.name == 'Vendor' %}
-                                {% if forloop.first %}
+                                {% if forloop.parentloop.first %}
                                     <div class="container-fluid " >
                                         <form class="d-flex" role="search" action="{% url 'order:searchOrder' %}" method="get">
                                         <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search">

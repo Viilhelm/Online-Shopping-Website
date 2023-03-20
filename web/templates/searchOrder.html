@@ -24,18 +24,18 @@
             {% if orders %}
                 
                 <div class="acss">
-                    {% for order in orders %}
+                    {% for order,total in orderZip %}
                         
                         <div class="card">
                             <div class="card-body">
-                                <a href="{% url 'order:order_detail' order.PONumber  %}" >
+                                <a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">
                                 
                                     <div class="col-sm-7">
                                         <p>PONumber: {{order.PONumber}}</p>
                                         <p>Purchase Date: {{order.purchaseDate}}</p>
                                         {% for group in request.user.groups.all %}
                                             {% if group.name == 'Vendor' %}
-                                                <p>Customer Name: {{order.customer.fullName}}</p>
+                                                <p>Customer Name: 《{{order.customer.fullName}}》</p>
                                             {% endif %}
                                         {% endfor %}
                                     </div>
@@ -43,7 +43,7 @@
                                         <p>Order Status: {{order.status}}</p>
                                         
                                             
-                                        <p>Total: {{total}}</p>
+                                        <p>Total: ${{total}}</p>
                                     </div>
                                 </a>
                             </div>
@@ -53,7 +53,7 @@
                     {% endfor %}
                 </div>
             {% else %}
-                <h1 class="text-center mb-5">Orders are empty.</h1>
+                <h1 class="text-center mb-5">There is no such order, please re-enter.</h1>
             {% endif %}
         </div>
     

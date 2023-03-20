@@ -140,6 +140,16 @@ def searchOrder(request):
         query = request.GET['search']
         status = request.GET.get('status')
         orders = Order.objects.filter(Q(PONumber__icontains=query) & Q(status=status))
-        return render(request, "searchOrder.html", {'orders': orders, "search": query, "status": status})
+        total = []
+        for o in orders:
+            PONumber = o.PONumber
+            order = Order.objects.get(PONumber=PONumber)
+            orderitems = OrderItem.objects.filter(order=order)
+            sum = 0
+            for oi in orderitems:
+                sum = sum + oi.price
+            total.append(sum)
+        orderZip = zip(orders,total)
+        return render(request, "searchOrder.html", {'orders': orders, "search": query, "status": status, "orderZip": orderZip})
     else:
         return HttpResponse("Please submit a search term.")
