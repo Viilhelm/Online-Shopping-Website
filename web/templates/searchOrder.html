@@ -29,7 +29,11 @@
                             <tr>
                             <th scope="col">PONumber</th>
                             <th scope="col">Purchase Date</th>
-                            <th scope="col">Customer Name</th>
+                            {% for group in request.user.groups.all %}
+                                {% if group.name == 'Vendor' %}
+                                    <th scope="col">Customer Name</th>
+                                {% endif %}
+                            {% endfor %}
                             <th scope="col">Order Status</th>
                             <th scope="col">Total</th>
                             </tr>
