@@ -38,7 +38,7 @@
                         <p>Shippment Date: {{order.shipmentDate}}</p>
                     {% elif order.status == 'cancelled' %}
                         <p>Cancel Date: {{order.cancelDate}}</p>
-                        <p>Cancel Person: </p>
+                        <p>Cancel Person: Vendor </p>
                     {% endif %}
                 </div>
             
@@ -49,11 +49,20 @@
             <h3>Total: ${{total}}</h3>
             {% for group in request.user.groups.all %}
                 {% if group.name == 'Vendor' %}
+                    {% if order.status != 'shipped' %}
                     <form action="/vendorShip" class="d-inline">
                         <input type="hidden" id="status" name="status" value="shipped" />
                         <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
                         <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-lg text-decoration-none text-white" >Ship the Order</button>
                     </form>
+                    {% endif %}
+                    {% if order.status != 'cancelled' %}
+                    <form action="/vendorCancel" class="d-inline">
+                        <input type="hidden" id="status" name="status" value="cancelled" />
+                        <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
+                        <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-lg text-decoration-none text-white" >Cancel the Order</button>
+                    </form>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
