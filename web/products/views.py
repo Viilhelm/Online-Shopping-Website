@@ -128,8 +128,10 @@ def searchProducts(request):
     if 'search' in request.GET and request.GET['search']:
         query = request.GET['search']
         categories = Category.objects.all()
-
-        products = Product.objects.filter(Q(productName__icontains=query) | Q(id__exact=query))
+        if query.isdigit():
+            products = Product.objects.filter(Q(productName__icontains=query) | Q(id__exact=query))
+        else:
+            products = Product.objects.filter(Q(productName__icontains=query) )
         
 
         # 对商品进行分页s
