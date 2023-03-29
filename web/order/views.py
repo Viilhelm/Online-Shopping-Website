@@ -86,7 +86,8 @@ class OrdersView(View):
       # 组织上下文
         context = {
            'orderZip': orderZip,
-           'orders':orders,
+           'orders': orders,
+           'filter': filter,
         }
 
         return render(request, 'orders.html', context)
@@ -156,7 +157,9 @@ def searchOrder(request):
     if 'search' in request.GET and request.GET['search']:
         query = request.GET['search']
         status = request.GET.get('status')
-        orders = Order.objects.filter(Q(PONumber__icontains=query) & Q(status=status))
+        
+        orders = Order.objects.filter(Q(PONumber__icontains=query))
+
         total = []
         for o in orders:
             PONumber = o.PONumber
@@ -167,6 +170,6 @@ def searchOrder(request):
                 sum = sum + oi.price
             total.append(sum)
         orderZip = zip(orders,total)
-        return render(request, "searchOrder.html", {'orders': orders, "search": query, "status": status, "orderZip": orderZip})
+        return render(request, "searchOrder.html", {"orders": orders, "filter": filter, "search": query, "status": status, "orderZip": orderZip})
     else:
         return HttpResponse("Please submit a search term.")

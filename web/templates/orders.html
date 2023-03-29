@@ -24,56 +24,58 @@
             {% if orders %}
                 
                 <div class="acss">
-                    {% for order,total in orderZip %}
+                    
                         {% for group in request.user.groups.all %}
                             {% if group.name == 'Vendor' %}
-                                {% if forloop.parentloop.first %}
+                                
                                     <div class="container-fluid " >
                                         <form class="d-flex" role="search" action="{% url 'order:searchOrder' %}" method="get">
                                         <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search">
-                                        <input type="hidden" id="status" name="status" value="{{order.status}}">
+                                        
                                         <button class="btn btn-outline-success" type="submit">Search</button>
                                         </form>
                                     </div>
                                     <br>
-                                {% else %}
-                                    <div class="container-fluid " >
-                                        <form class="d-flex" role="search" action="{% url 'order:searchOrder' %}" method="get">
-                                        <input class="form-control me-2" type="hidden" name="search" placeholder="Search" aria-label="Search">
-                                        <input type="hidden" id="status" name="status" value="{{order.status}}">
-                                        </form>
-                                    </div>
-                                    <br>
-
-                                {% endif %}
+                              
                             {% endif %}
                         {% endfor %}
-                        
-                        <div class="card">
-                            <div class="card-body">
-                                <a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">
+                   
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">PONumber</th>
+                            <th scope="col">Purchase Date</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Order Status</th>
+                            <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order,total in orderZip %}
+
+                            <tr>
+                                
+                                <th scope="row"><a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">{{order.PONumber}}</a></th>
+                                <td><a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">{{order.purchaseDate}}</a></td>
+                                {% for group in request.user.groups.all %}
+                                    {% if group.name == 'Vendor' %}
+                                        <td><a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">{{order.customer.fullName}}</a></td>
+                                    {% endif %}
+                                {% endfor %}
+                                <td><a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">{{order.status}}</a></td>
+                                <td><a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">${{total}}</a></td>
+                                
+                            </tr>
                             
-                                    <div class="col-sm-7">
-                                        <p>PONumber: {{order.PONumber}}</p>
-                                        <p>Purchase Date: {{order.purchaseDate}}</p>
-                                        {% for group in request.user.groups.all %}
-                                            {% if group.name == 'Vendor' %}
-                                                <p>Customer Name: {{order.customer.fullName}}</p>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                    <div class="col-sm">
-                                        <p>Order Status: {{order.status}}</p>
-                                        
-                                            
-                                        <p>Total: ${{total}}</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                        
+                        
                         <br>
 
-                    {% endfor %}
                 </div>
             {% else %}
                 <h1 class="text-center mb-5">Orders are empty.</h1>
