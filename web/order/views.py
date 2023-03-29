@@ -145,6 +145,13 @@ def vendorCancel(request):
 
     return redirect('order:order_detail', PONumber = PONumber)
 
+def vendorHold(request):
+    status = request.GET.get('status')
+    PONumber = request.GET.get('PONumber')
+    Order.objects.filter(PONumber=PONumber).update(status=status)
+
+    return redirect('order:order_detail', PONumber = PONumber)
+
 def searchOrder(request):
     if 'search' in request.GET and request.GET['search']:
         query = request.GET['search']
