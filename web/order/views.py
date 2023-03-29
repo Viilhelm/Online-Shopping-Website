@@ -9,6 +9,8 @@ from django.db import transaction
 from datetime import datetime
 from order import models
 from django.http import HttpResponse
+import random
+
 
 # Create your views here.
 class Checkout(View):
@@ -16,7 +18,7 @@ class Checkout(View):
         user = request.user
         address = Customer.objects.filter(user=user)
         shoppingcart = ShoppingCart.objects.filter(user=user)
-        PONumber = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
+        PONumber = datetime.now().strftime('%Y%m%d%H%M%S') + str(random.randint(1000, 9999)) + str(user.id)
         totalamount = 0
         for p in shoppingcart:
             value = p.quantity * p.product.price
@@ -28,7 +30,7 @@ class Checkout(View):
 def OrderCommit(request):
     totalamount = request.GET.get('totalamount')
     user = request.user
-    PONumber = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
+    PONumber = datetime.now().strftime('%Y%m%d%H%M%S') + str(random.randint(1000, 9999)) + str(user.id)
     shoppingcart = ShoppingCart.objects.filter(user=user)
     customer = Customer.objects.get(user=user)
     models.Order.objects.create(
