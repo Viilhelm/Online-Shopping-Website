@@ -12,5 +12,6 @@ urlpatterns = [
     path("vendorCancel/", views.vendorCancel, name="vendorCancel"),
     path("vendorHold/", views.vendorHold, name="vendorHold"),
     path("searchOrder/", views.searchOrder, name="searchOrder"),
+    path("report/", views.ReportView.as_view(), name="report"),
     
 ]

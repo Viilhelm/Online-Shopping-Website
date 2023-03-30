@@ -173,3 +173,26 @@ def searchOrder(request):
         return render(request, "searchOrder.html", {"orders": orders, "filter": filter, "search": query, "status": status, "orderZip": orderZip})
     else:
         return HttpResponse("Please submit a search term.")
+    
+class ReportView(View):
+    def get(self, request):
+        
+        user = request.user
+        items = OrderItem.objects.all()
+
+        
+            
+        
+
+
+
+      # 组织上下文
+        context = {
+           'items': items,
+           'dic': dic,
+        }
+
+        return render(request, 'report.html', context)
+    
+
+

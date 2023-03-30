@@ -16,6 +16,7 @@
                         <li class="d-grid"><a href="{% url 'order:orders' %}?filter=pending" class="btn" {% if filter == 'pending' %}class="active"{% endif %}>Pending Orders</a></li>
                         <li class="d-grid"><a href="{% url 'order:orders' %}?filter=hold" class="btn" {% if filter == 'hold' %}class="active"{% endif %}>Orders On Hold</a></li>
                         <li class="d-grid"><a href="{% url 'order:orders' %}?filter=pastOrders" class="btn" {% if filter == 'pastOrders' %}class="active"{% endif %}>Past Orders</a></li>
+                        <li class="d-grid"><a href="{% url 'order:report' %}" class="btn btn-outline-secondary">Get Sales Report</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

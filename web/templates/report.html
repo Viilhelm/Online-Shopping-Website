@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sales Report{% endblock title %}
+{% block main-content %}
+<h2>Sales Report</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">product Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Sales Quantities</th>
+        <th scope="col">Sales Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+        <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock main-content %}
