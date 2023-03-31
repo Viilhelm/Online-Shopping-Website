@@ -176,8 +176,6 @@ class ReportView(View):
     def get(self, request):
         items = OrderItem.objects.all()
 
-        
-
         pName = []
         for item in items:           
             pName.append((item.product.productName,item.product.price))
@@ -189,6 +187,12 @@ class ReportView(View):
         tup = zip(dic.values(), dic.keys())
         sort = list(sorted(tup, reverse=True))
 
+        length = len(items)
+        
+        total = 0
+        for k, v in dic.items():
+            total = total + k[1] * v
+
         
 
       # 组织上下文
@@ -196,6 +200,8 @@ class ReportView(View):
            'items': items,
            'dic': dic,
            'sort': sort,
+           'length': length,
+           'total': total,
         }
 
         return render(request, 'report.html', context)
