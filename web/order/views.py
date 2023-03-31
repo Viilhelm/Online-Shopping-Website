@@ -4,8 +4,6 @@ from customers.models import Customer
 from shoppingcart.models import ShoppingCart
 from order.models import OrderItem, Order
 from django.db.models import Q
-from django.http import JsonResponse
-from django.db import transaction
 from datetime import datetime
 from order import models
 from django.http import HttpResponse
@@ -181,14 +179,25 @@ class ReportView(View):
         items = OrderItem.objects.all()
 
         
-            
+
+        pName = []
+        for item in items:           
+            pName.append((item.product.productName,item.product.price))
         
+        dic = {}
+        for p in pName:
+            dic[p] = dic.get(p, 0) + 1
 
-
+        total = []
+        for k, v in dic.items():
+            amount = k[1] * v
+            total.append(amount)
+        itemsZip = zip(dic,total)
 
       # 组织上下文
         context = {
            'items': items,
+           'itemsZip': itemsZip,
            'dic': dic,
         }
 
