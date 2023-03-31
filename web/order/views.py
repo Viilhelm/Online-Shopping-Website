@@ -174,8 +174,6 @@ def searchOrder(request):
     
 class ReportView(View):
     def get(self, request):
-        
-        user = request.user
         items = OrderItem.objects.all()
 
         
@@ -188,17 +186,16 @@ class ReportView(View):
         for p in pName:
             dic[p] = dic.get(p, 0) + 1
 
-        total = []
-        for k, v in dic.items():
-            amount = k[1] * v
-            total.append(amount)
-        itemsZip = zip(dic,total)
+        tup = zip(dic.values(), dic.keys())
+        sort = list(sorted(tup, reverse=True))
+
+        
 
       # 组织上下文
         context = {
            'items': items,
-           'itemsZip': itemsZip,
            'dic': dic,
+           'sort': sort,
         }
 
         return render(request, 'report.html', context)
