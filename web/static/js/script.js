@@ -41,3 +41,7 @@ $('.remove-cart').click(function(){
     })
 })
 
+
+
+
+     

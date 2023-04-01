@@ -13,5 +13,6 @@ urlpatterns = [
     path("vendorHold/", views.vendorHold, name="vendorHold"),
     path("searchOrder/", views.searchOrder, name="searchOrder"),
     path("report/", views.ReportView.as_view(), name="report"),
+    path("searchDate/", views.searchDate, name="searchDate"),
     
 ]

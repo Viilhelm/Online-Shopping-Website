@@ -174,7 +174,7 @@ def searchOrder(request):
     
 class ReportView(View):
     def get(self, request):
-        orders = Order.objects.filter(purchaseDate__lte=datetime.now(), purchaseDate__gte=datetime.now() + timedelta(days=-5))
+        orders = Order.objects.filter(purchaseDate__lte=datetime.now(), purchaseDate__gte=datetime.now() + timedelta(days=-30))
         items = OrderItem.objects.filter(order__in=orders)
 
         pName = []
@@ -206,6 +206,44 @@ class ReportView(View):
         }
 
         return render(request, 'report.html', context)
+    
+def searchDate(request):
+    if 'datetimepicker1' in request.GET and request.GET['datetimepicker1'] and 'datetimepicker2' in request.GET and request.GET['datetimepicker2']:
+        datetimepicker1 = request.GET['datetimepicker1']
+        datetimepicker2 = request.GET['datetimepicker2']
+        status = request.GET.get('status')
+        
+        orders = Order.objects.filter(purchaseDate__lte=datetimepicker2, purchaseDate__gte=datetimepicker1)
+        items = OrderItem.objects.filter(order__in=orders)
+
+        pName = []
+        for item in items:           
+            pName.append((item.product.productName,item.product.price))
+        
+        dic = {}
+        for p in pName:
+            dic[p] = dic.get(p, 0) + 1
+
+        tup = zip(dic.values(), dic.keys())
+        sort = list(sorted(tup, reverse=True))
+
+        length = len(items)
+        
+        total = 0
+        for k, v in dic.items():
+            total = total + k[1] * v
+
+        context = {
+            'items': items,
+            'dic': dic,
+            'sort': sort,
+            'length': length,
+            'total': total,
+        }
+
+        return render(request, "searchDate.html", context)
+    else:
+        return HttpResponse("Please select a date range.")
     
 
 
