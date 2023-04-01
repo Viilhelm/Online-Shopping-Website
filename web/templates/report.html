@@ -5,11 +5,12 @@
 {% block main-content %}
 <div class="container">
   <h2>Sales Report</h2>
+  <h5>If no time period is selected, the report defaults to the last thirty days.</h5>
   <div class="row">
     <form method="get" role="search" action="{% url 'order:searchDate' %}">
       <div class='col-sm-5'>
           <div class="form-group">
-              <label>选择开始时间：</label>
+              <label>Start Time:</label>
               <!--指定 date标记-->
               <div class='input-group date' id='datetimepicker1'>
                   <input type='text' class="form-control" name="datetimepicker1"/>
@@ -21,7 +22,7 @@
       </div>
       <div class='col-sm-5'>
           <div class="form-group">
-              <label>选择结束时间：</label>
+              <label>End Time:</label>
               <!--指定 date标记-->
               <div class='input-group date' id='datetimepicker2'>
                   <input type='text' class="form-control" name="datetimepicker2"/>
@@ -36,6 +37,7 @@
         <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-lg text-decoration-none text-white" >Search</button>
       </div>
     </form>
+  
     <script type="text/javascript">
       $(function () {
         $('#datetimepicker1').datetimepicker({
