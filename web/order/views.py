@@ -4,7 +4,7 @@ from customers.models import Customer
 from shoppingcart.models import ShoppingCart
 from order.models import OrderItem, Order
 from django.db.models import Q
-from datetime import datetime
+from datetime import datetime, timedelta
 from order import models
 from django.http import HttpResponse
 import random
@@ -174,7 +174,8 @@ def searchOrder(request):
     
 class ReportView(View):
     def get(self, request):
-        items = OrderItem.objects.all()
+        orders = Order.objects.filter(purchaseDate__lte=datetime.now(), purchaseDate__gte=datetime.now() + timedelta(days=-5))
+        items = OrderItem.objects.filter(order__in=orders)
 
         pName = []
         for item in items:           
