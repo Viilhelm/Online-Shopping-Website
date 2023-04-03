@@ -16,11 +16,11 @@ class Order(models.Model):
     PONumber = models.CharField(max_length=30, primary_key=True)
     purchaseDate = models.DateTimeField(default=datetime.now)
     status = models.CharField(default=ORDER_STATUS_CHOICES[0][0], choices=ORDER_STATUS_CHOICES, max_length=20)
-    customer = models.ForeignKey('customers.Customer',on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     shipmentDate = models.DateTimeField(null = True)
     cancelDate = models.DateTimeField(null = True)
     vendor = models.ForeignKey('vendors.Vendor',on_delete=models.CASCADE, default=4)
+    customer = models.ForeignKey('customers.Customer',on_delete=models.CASCADE)
 
 class OrderItem(models.Model):
     
