@@ -185,7 +185,6 @@ class ReportView(View):
         for p in pName:
             dic[p] = dic.get(p, 0) + 1
 
-        tup = zip(dic.values(), dic.keys())
         sort = sorted(dic.items(), key=lambda kv: kv[1], reverse=True)
 
         length = len(items)
@@ -224,7 +223,6 @@ def searchDate(request):
         for p in pName:
             dic[p] = dic.get(p, 0) + 1
 
-        tup = zip(dic.values(), dic.keys())
         sort = sorted(dic.items(), key=lambda kv: kv[1], reverse=True)
 
         length = len(items)
