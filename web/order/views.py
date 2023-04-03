@@ -35,7 +35,7 @@ def OrderCommit(request):
         PONumber=PONumber,
         customer=customer,
         user=user,
-        status="pending"
+        status="pending",
     ).save()
     order = Order.objects.get(PONumber=PONumber)
     for sc in shoppingcart:

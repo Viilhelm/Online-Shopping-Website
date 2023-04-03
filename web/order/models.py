@@ -20,6 +20,7 @@ class Order(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     shipmentDate = models.DateTimeField(null = True)
     cancelDate = models.DateTimeField(null = True)
+    vendor = models.ForeignKey('vendors.Vendor',on_delete=models.CASCADE, default=4)
 
 class OrderItem(models.Model):
     
