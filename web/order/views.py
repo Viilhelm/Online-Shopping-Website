@@ -193,6 +193,12 @@ class ReportView(View):
         for k, v in dic.items():
             total = total + k[1] * v
 
+        best = []
+        first = sort[0][1]
+        for i in sort:
+            if i[1] == first:
+                best.append(i)
+
         
 
       # 组织上下文
@@ -202,6 +208,7 @@ class ReportView(View):
            'sort': sort,
            'length': length,
            'total': total,
+           'best': best,
         }
 
         return render(request, 'report.html', context)
@@ -210,7 +217,6 @@ def searchDate(request):
     if 'datetimepicker1' in request.GET and request.GET['datetimepicker1'] and 'datetimepicker2' in request.GET and request.GET['datetimepicker2']:
         datetimepicker1 = request.GET['datetimepicker1']
         datetimepicker2 = request.GET['datetimepicker2']
-        status = request.GET.get('status')
         
         orders = Order.objects.filter(purchaseDate__lte=datetimepicker2, purchaseDate__gte=datetimepicker1)
         items = OrderItem.objects.filter(order__in=orders)
@@ -230,7 +236,12 @@ def searchDate(request):
         total = 0
         for k, v in dic.items():
             total = total + k[1] * v
-
+        
+        best = []
+        first = sort[0][1]
+        for i in sort:
+            if i[1] == first:
+                best.append(i)
         
 
         context = {
@@ -239,6 +250,9 @@ def searchDate(request):
             'sort': sort,
             'length': length,
             'total': total,
+            'best': best,
+            'datetimepicker1': datetimepicker1,
+            'datetimepicker2': datetimepicker2,
         }
 
         return render(request, "searchDate.html", context)
