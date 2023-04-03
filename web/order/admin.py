@@ -4,7 +4,7 @@ from .models import Order,OrderItem
 # Register your models here.
 @admin.register(Order)
 class OrderlAdmin(admin.ModelAdmin):
-    list_display = ['PONumber','purchaseDate','status','customer','user']
+    list_display = ['PONumber','purchaseDate','status','customer','user', 'vendor']
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
