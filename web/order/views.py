@@ -260,14 +260,20 @@ def searchDate(request):
     else:
         return HttpResponse("Please select a date range.")
     
-def RRAdd(request):
-    if request.method == 'GET':
-        user = request.user
-        
 
-        
+    
+class RRAddView(View):
+    def get(self, request):
+        user = request.user
+        PONumber = request.GET.get('PONumber')
+        item_id = request.GET.get('item_id')
+
+        order = Order.objects.get(PONumber=PONumber)
+        item = OrderItem.objects.get(id=item_id)
 
         context = {
+            'order': order,
+            'item': item,
             
         }
 

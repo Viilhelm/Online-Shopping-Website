@@ -30,7 +30,11 @@
 
                         <div class="col-sm-12">
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <div class="d-grid"><a href="{% url 'order:RRAdd' %}" class="btn btn-primary">Rate & Review</a></div>
+                                <form action="/RRAdd" class="d-inline">
+                                    <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
+                                    <input type="hidden" id="item_id" name="item_id" value="{{item.id}}" />
+                                    <button type="sumbit" class="btn btn-primary" >Rate & Review</button>
+                                </form>
                             </div>
                         </div>
 

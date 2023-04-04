@@ -2,5 +2,52 @@
 {% load static %}
 {% block title %}Home{% endblock title %}
 {% block main-content %}
-Home
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled">
+                {% for group in request.user.groups.all %}
+                    {% if group.name == 'Customer' %}
+                        <li class="d-grid"><a href="{% url 'order:order_detail' order.PONumber %}" class="btn btn-primary" >Return the order</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-9 offset-sm-1">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <div class="col text-center mb-4">
+                                    <a href="{% url 'products:product_detail' item.product.id %}" class="btn img-fluid rounded-start">
+                                        <div>
+                                            <img src="{{item.product.image.url}}" width="200px" height="300px">
+                                            <div class="fw-bold">Name: 《{{item.product.productName}}》</div>
+                                            <div class="fw-bold text-danger">Price: ${{item.price}}</div>
+                                            <div class="fw-bold">Category: {{item.product.category.categoryName}}</div>
+                                            
+                                        </div>
+                                    </a>
+                                </div>  
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                              </div>
+                            </div>
+                        
+
+                    </div>
+                </div>
+                <br>
+            
+            
+           
+        </div>
+        
+    </div>
+</div>
 {% endblock main-content %}

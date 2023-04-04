@@ -14,6 +14,6 @@ urlpatterns = [
     path("searchOrder/", views.searchOrder, name="searchOrder"),
     path("report/", views.ReportView.as_view(), name="report"),
     path("searchDate/", views.searchDate, name="searchDate"),
-    path("RRAdd/", views.RRAdd, name="RRAdd"),
+    path("RRAdd/", views.RRAddView.as_view(), name="RRAdd"),
     
 ]
