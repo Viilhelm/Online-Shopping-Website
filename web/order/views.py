@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from customers.models import Customer
+from products.models import Product
 from shoppingcart.models import ShoppingCart
 from order.models import OrderItem, Order
 from django.db.models import Q
@@ -259,5 +260,18 @@ def searchDate(request):
     else:
         return HttpResponse("Please select a date range.")
     
+def RRAdd(request):
+    if request.method == 'GET':
+        user = request.user
+        
+
+        
+
+        context = {
+            
+        }
+
+        return render(request, 'RRAdd.html', context)
+
 
 
