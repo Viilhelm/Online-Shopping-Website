@@ -6,7 +6,7 @@
  transition: transform .5s ease;
 }
 
- .owl-carousel .item:hover{
+.owl-carousel .item:hover{
     /* border: 1px solid black; */
     transform : scale(1.1);
 }
@@ -85,7 +85,3 @@
     text-decoration: none;
 }
 
-.acss a{
-    text-decoration: none;
-
-}

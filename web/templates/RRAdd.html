@@ -2,6 +2,46 @@
 {% load static %}
 {% block title %}Home{% endblock title %}
 {% block main-content %}
+<style type="text/css">
+    .rating {
+        width: 300px;
+        margin: 0 auto 1em;
+        font-size: 45px;
+        overflow:hidden;
+    }
+    .rating input {
+    float: right;
+    opacity: 0;
+    position: absolute;
+    }
+    .rating a, 
+    .rating label {
+                float:right;
+                color: #aaa;
+                text-decoration: none;
+                -webkit-transition: color .4s;
+                -moz-transition: color .4s;
+                -o-transition: color .4s;
+                transition: color .4s;
+            }
+    .rating label:hover ~ label,
+    .rating input:focus ~ label,
+    .rating label:hover,
+            .rating a:hover,
+            .rating a:hover ~ a,
+            .rating a:focus,
+            .rating a:focus ~ a		{
+                color: orange;
+                cursor: pointer;
+            }
+            .rating2 {
+                direction: rtl;
+            }
+            .rating2 a {
+                float:none
+            }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="container my-5">
     <div class="row">
         <div class="col-sm-2 border-end">
@@ -23,7 +63,7 @@
                                     <a href="{% url 'products:product_detail' item.product.id %}" class="btn img-fluid rounded-start">
                                         <div>
                                             <img src="{{item.product.image.url}}" width="200px" height="300px">
-                                            <div class="fw-bold">Name: 《{{item.product.productName}}》</div>
+                                            <div class="fw-bold" style="width:200px; text-overflow:ellipsis; overflow:hidden ">《{{item.product.productName}}》</div>
                                             <div class="fw-bold text-danger">Price: ${{item.price}}</div>
                                             <div class="fw-bold">Category: {{item.product.category.categoryName}}</div>
                                             
@@ -33,9 +73,43 @@
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                <h5 class="card-title"></h5>                                
+                                <div class="mb-3">      
+                                    <label for="RatingFormControlInput1" class="form-label">My Rating:</label>
+                                    <div class="rating rating2" oiid={{item.id}}>
+                                        <a href="#5" title="Give 5 stars" data-value="5">★</a>
+                                        <a href="#4" title="Give 4 stars" data-value="4">★</a>
+                                        <a href="#3" title="Give 3 stars" data-value="3">★</a>
+                                        <a href="#2" title="Give 2 stars" data-value="2">★</a>
+                                        <a href="#1" title="Give 1 star" data-value="1">★</a>
+                                    </div>
+                                </div>
+                                
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% for fm in form %}
+                                        {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+                                        <br>
+                                    {% endfor %}
+                                    <div class="col-2 mt-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                    
+                    
+                                    {% if form.non_field_errors %}
+                                        {% for error in form.non_filed_errors %}
+                                            <p>{{error}}</p>
+                                        {% endfor %}
+                                    {% endif %} 
+                    
+                                    {% if messages %}
+                                        {% for msg in messages %}
+                                            <div class="alert alert-{{msg.tags}}" role="alert">
+                                                {{msg}}
+                                            </div>
+                                        {% endfor %} 
+                                    {% endif %}
+                                </form>
                               </div>
                             </div>
                         

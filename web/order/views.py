@@ -9,6 +9,9 @@ from datetime import datetime, timedelta
 from order import models
 from django.http import HttpResponse
 import random
+from django.http import JsonResponse
+from .forms import RRAddForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -263,21 +266,48 @@ def searchDate(request):
 
     
 class RRAddView(View):
-    def get(self, request):
-        user = request.user
+    def get(self,request):
+        form = RRAddForm()
         PONumber = request.GET.get('PONumber')
         item_id = request.GET.get('item_id')
-
         order = Order.objects.get(PONumber=PONumber)
         item = OrderItem.objects.get(id=item_id)
 
         context = {
             'order': order,
             'item': item,
+            'form': form,
             
         }
+        return render(request,'RRAdd.html', context)
+    def post(self,request):
+        form = RRAddForm(request.POST)
+        rating = request.POST.get('rating')
+        PONumber = request.GET.get('PONumber')
+        item_id = request.GET.get('item_id') 
+        OrderItem.objects.filter(id=item_id).update(myRate=rating)
 
-        return render(request, 'RRAdd.html', context)
+        if form.is_valid():
+            myComment = form.cleaned_data['myComment']
+
+            OrderItem.objects.filter(id=item_id).update(myComment=myComment)
+            
+            return redirect('order:order_detail', PONumber = PONumber) 
+        else:
+            messages.warning(request,"Invalid Input Data")
+        return render(request,'RRAdd.html',locals())
+
+    
+def rating(request):
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        rating = request.POST.get('rating')
+
+        
+        data = {
+            'rating':rating,
+        }
+        return JsonResponse(data)
 
 
 
