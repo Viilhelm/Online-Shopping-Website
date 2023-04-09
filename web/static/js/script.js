@@ -43,17 +43,22 @@ $('.remove-cart').click(function(){
 
 $(".rating a").on('click', function(e){
 	let value = $(this).data('value');
+    var id = $(this).attr("oiid").toString();
+    var eml = this
     $.ajax({
-        url: "{% url 'order:RRAdd' %}",
+        url: "/rating",
         type: 'POST',
         data: {
             'rating': value,
+            'item_id': id,
         },
         success: function (data){
             console.log("done");
         }
    })
 });
+
+
 
 
      

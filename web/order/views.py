@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from customers.models import Customer
-from products.models import Product
 from shoppingcart.models import ShoppingCart
 from order.models import OrderItem, Order
 from django.db.models import Q
@@ -282,10 +281,10 @@ class RRAddView(View):
         return render(request,'RRAdd.html', context)
     def post(self,request):
         form = RRAddForm(request.POST)
-        rating = request.POST.get('rating')
+        
         PONumber = request.GET.get('PONumber')
         item_id = request.GET.get('item_id') 
-        OrderItem.objects.filter(id=item_id).update(myRate=rating)
+        
 
         if form.is_valid():
             myComment = form.cleaned_data['myComment']
@@ -303,11 +302,15 @@ def rating(request):
         item_id = request.POST.get('item_id')
         rating = request.POST.get('rating')
 
+        OrderItem.objects.filter(id=item_id).update(myRate=rating)
+ 
+
         
         data = {
             'rating':rating,
         }
         return JsonResponse(data)
+
 
 
 

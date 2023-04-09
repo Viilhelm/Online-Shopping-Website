@@ -41,7 +41,9 @@
                 float:none
             }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="container my-5">
     <div class="row">
         <div class="col-sm-2 border-end">
@@ -73,15 +75,16 @@
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">
+                                
                                 <h5 class="card-title"></h5>                                
                                 <div class="mb-3">      
                                     <label for="RatingFormControlInput1" class="form-label">My Rating:</label>
                                     <div class="rating rating2" oiid={{item.id}}>
-                                        <a href="#5" title="Give 5 stars" data-value="5">★</a>
-                                        <a href="#4" title="Give 4 stars" data-value="4">★</a>
-                                        <a href="#3" title="Give 3 stars" data-value="3">★</a>
-                                        <a href="#2" title="Give 2 stars" data-value="2">★</a>
-                                        <a href="#1" title="Give 1 star" data-value="1">★</a>
+                                        <a href="#5" title="Give 5 stars" data-value="5" oiid={{item.id}}>★</a>
+                                        <a href="#4" title="Give 4 stars" data-value="4" oiid={{item.id}}>★</a>
+                                        <a href="#3" title="Give 3 stars" data-value="3" oiid={{item.id}}>★</a>
+                                        <a href="#2" title="Give 2 stars" data-value="2" oiid={{item.id}}>★</a>
+                                        <a href="#1" title="Give 1 star" data-value="1" oiid={{item.id}}>★</a>
                                     </div>
                                 </div>
                                 
