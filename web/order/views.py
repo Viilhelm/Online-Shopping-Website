@@ -285,6 +285,8 @@ class RRAddView(View):
         PONumber = request.GET.get('PONumber')
         item_id = request.GET.get('item_id') 
         
+        order = Order.objects.get(PONumber=PONumber)
+        item = OrderItem.objects.get(id=item_id)
 
         if form.is_valid():
             myComment = form.cleaned_data['myComment']
@@ -301,6 +303,9 @@ def rating(request):
     if request.method == 'POST':
         item_id = request.POST.get('item_id')
         rating = request.POST.get('rating')
+        PONumber = request.POST.get('PONumber')
+
+        order = Order.objects.filter(PONumber=PONumber)
 
         OrderItem.objects.filter(id=item_id).update(myRate=rating)
  
@@ -309,7 +314,7 @@ def rating(request):
         data = {
             'rating':rating,
         }
-        return JsonResponse(data)
+        return JsonResponse({'success':'true', 'rating': rating}, safe=False)
 
 
 

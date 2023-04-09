@@ -41,9 +41,10 @@ $('.remove-cart').click(function(){
     })
 })
 
-$(".rating a").on('click', function(e){
+$(".rating button").on('click', function(e){
 	let value = $(this).data('value');
     var id = $(this).attr("oiid").toString();
+    var pid = $(this).attr("pid").toString();
     var eml = this
     $.ajax({
         url: "/rating",
@@ -51,9 +52,10 @@ $(".rating a").on('click', function(e){
         data: {
             'rating': value,
             'item_id': id,
+            'PONumber': pid,
         },
-        success: function (data){
-            console.log("done");
+        success: function (response){
+            console.log(response)
         }
    })
 });
