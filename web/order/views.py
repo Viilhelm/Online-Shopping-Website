@@ -9,7 +9,7 @@ from order import models
 from django.http import HttpResponse
 import random
 from django.http import JsonResponse
-from .forms import RRAddForm
+from .forms import RRAddForm, ReviewForm
 from django.contrib import messages
 
 
@@ -272,50 +272,29 @@ class RRAddView(View):
         order = Order.objects.get(PONumber=PONumber)
         item = OrderItem.objects.get(id=item_id)
 
-        context = {
-            'order': order,
-            'item': item,
-            'form': form,
-            
-        }
-        return render(request,'RRAdd.html', context)
-    def post(self,request):
-        form = RRAddForm(request.POST)
         
-        PONumber = request.GET.get('PONumber')
-        item_id = request.GET.get('item_id') 
-        
-        order = Order.objects.get(PONumber=PONumber)
-        item = OrderItem.objects.get(id=item_id)
-
-        if form.is_valid():
-            myComment = form.cleaned_data['myComment']
-
-            OrderItem.objects.filter(id=item_id).update(myComment=myComment)
-            
-            return redirect('order:order_detail', PONumber = PONumber) 
-        else:
-            messages.warning(request,"Invalid Input Data")
-        return render(request,'RRAdd.html',locals())
+        return render(request,'RRAdd.html', locals())
+   
 
     
-def rating(request):
+
+def submitRR(request):
     if request.method == 'POST':
-        item_id = request.POST.get('item_id')
-        rating = request.POST.get('rating')
         PONumber = request.POST.get('PONumber')
+        item_id = request.POST.get('item_id') 
 
-        order = Order.objects.filter(PONumber=PONumber)
+          
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            myRate = form.cleaned_data['myRate']
+            myComment = form.cleaned_data['myComment']
 
-        OrderItem.objects.filter(id=item_id).update(myRate=rating)
- 
+            OrderItem.objects.filter(id=item_id).update(myRate=myRate,myComment=myComment)
+            
 
+            messages.success(request, 'Thank you! Your review has been submitted.')
+            return redirect('/home')
         
-        data = {
-            'rating':rating,
-        }
-        return JsonResponse({'success':'true', 'rating': rating}, safe=False)
-
 
 
 

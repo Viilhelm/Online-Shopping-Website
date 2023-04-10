@@ -10,3 +10,8 @@ class RRAddForm(forms.ModelForm):
 
         }
         labels = {'myComment': 'My Comment'}
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ['myRate', 'myComment']
