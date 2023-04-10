@@ -120,18 +120,7 @@ class ProductDetailView(View):
         product = Product.objects.get(id=pk)
         items = OrderItem.objects.filter(product=product)
 
-        sumRating = 0
-        j = 0
-        for i in items:
-            if i.myRate:
-                sumRating = sumRating + i.myRate
-                j = j + 1
-        if j != 0:
-            avgRating = sumRating / j
-
-            Product.objects.filter(id=pk).update(avgRating=avgRating)
-
-        
+              
         
         
 

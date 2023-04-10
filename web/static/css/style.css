@@ -132,13 +132,13 @@
    
    
    /* Click and hover */
-   input:checked ~ label, label:hover ~ label{
+   input:checked ~ label, .rate label:hover ~ label{
      color: #ffb503;
    }
    
    /* hover hightlight */
-   input:checked + label:hover, input:checked ~ label:hover,input:checked ~ label:hover ~ label,
-   label:hover ~ input:checked ~ label{
+   input:checked + .rate label:hover, input:checked ~ .rate label:hover,input:checked ~ .rate label:hover ~ .rate label,
+   .rate label:hover ~ input:checked ~ .rate label{
      color: #cc9000;
    }
    
