@@ -2,114 +2,7 @@
 {% load static %}
 {% block title %}Home{% endblock title %}
 {% block main-content %}
-<style type="text/css">
-    /* Hide Radio button */
-    .rate > input{
-        display: none;
-        float: right;
-        opacity: 0;
-        position: absolute;
-    }
 
-    .rate{
-        display: inline-block;;
-        border: 0;
-        width: 300px;
-        margin: 0 auto 1em;
-        font-size: 45px;
-        overflow:hidden;
-    }
-
-    .rate > label{
-        float: right;
-        color: #aaa;
-        text-decoration: none;
-        -webkit-transition: color .4s;
-        -moz-transition: color .4s;
-        -o-transition: color .4s;
-        transition: color .4s;
-    }
-
-    /* Showing the stars */
-    .rate > label:before{
-        display: inline-block;
-        font-size: 5.1rem;
-        font-family: FontAwesome;
-        content: "\f005";
-        margin:0;
-        padding:0.3rem .2rem;
-        cursor: pointer;
-    }
-
-    /* Half star */
-    .rate .half:before{
-        content: "\f089";
-        position: absolute;
-        padding-right: 0;
-    }
-
-
-
-    /* Click and hover */
-    input:checked ~ label, label:hover ~ label{
-      color: #ffb503;
-    }
-
-    /* hover hightlight */
-    input:checked + label:hover, input:checked ~ label:hover,input:checked ~ label:hover ~ label,
-    label:hover ~ input:checked ~ label{
-      color: #cc9000;
-    }
-
-    .rating-star i{
-      color: #ffb503 !important;
-    }
-
-
-
-
-    .my-btn {
-        background-color: inherit !important;
-        border: 0 !important;
-    }
-    .rating {
-        width: 300px;
-        margin: 0 auto 1em;
-        font-size: 45px;
-        overflow:hidden;
-    }
-    .rating input {
-        float: right;
-        opacity: 0;
-        position: absolute;
-    }
-    .rating button, 
-    .rating label {
-        float:right;
-        color: #aaa;
-        text-decoration: none;
-        -webkit-transition: color .4s;
-        -moz-transition: color .4s;
-        -o-transition: color .4s;
-        transition: color .4s;
-    }
-    .rating label:hover ~ label,
-    .rating input:focus ~ label,
-    .rating label:hover,
-    .rating button:hover,
-    .rating button:hover ~ button,
-    .rating button:focus,
-    .rating button:focus ~ button		{
-        color: orange;
-        cursor: pointer;
-    }
-    .rating2 {
-        direction: rtl;
-    }
-    .rating2 button {
-        float:none
-    }
-</style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -169,7 +62,7 @@
                                             </div>
                     <br>
                                            
-                                            <label>Review:</label>
+                                            <h5><b>Review:</b></h5>
                                             <textarea name="myComment" rows="4" class="form-control"></textarea>
                                             <br>
                                             {% if user.is_authenticated %}

@@ -1,87 +1,192 @@
 .owl-carousel .item{
- /* border: 1px solid black; */
- font-size: 24px;
- text-align: center;
- margin-top: 20px;
- transition: transform .5s ease;
-}
-
-.owl-carousel .item:hover{
     /* border: 1px solid black; */
-    transform : scale(1.1);
-}
-
-/* .owl-carousel img{
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
     transition: transform .5s ease;
+   }
+   
+   .owl-carousel .item:hover{
+       /* border: 1px solid black; */
+       transform : scale(1.1);
+   }
+   
+   /* .owl-carousel img{
+       transition: transform .5s ease;
+     }
+    .owl-carousel img:hover{
+       
+       transform : scale(1.25);
+   } */
+   
+   .owl-next{
+    float:right;
+   }
+   .owl-prev{
+    float:left;
+   }
+   .owl-prev span{
+    font-size: 24px;
+    font-weight: bold;
+   }
+   .owl-next span{
+    font-size: 24px;
+    font-weight: bold;
+   }
+   
+   
+   
+   
+   .buttermilk{
+       background-color:#fff;background-image:linear-gradient(#fff7ef, #fff);
+       background-image:-webkit-linear-gradient(#fff7ef, #fff);
+       background-image:-moz-linear-gradient(#fff7ef, #fff);
+       background-image:-ms-linear-gradient(#fff7ef, #fff);
+       background-image:-o-linear-gradient(#fff7ef, #fff);
+       padding:50px 40px;
+       border:1px solid #efe8e1;
+       padding-bottom:20px;
+   }
+   
+   .smbg{
+       background-color:#fff;
+       background-image:linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+       background-image:-webkit-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+       background-image:-moz-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+       background-image:-ms-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+       background-image:-o-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+   }
+   
+   .curdbgpro{
+       background-color:#fff;
+       background-image:linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+       background-image:-webkit-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+       background-image:-moz-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+       background-image:-ms-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+       background-image:-o-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+   }
+   
+   .goodnessseccont img{
+       width:100%;
+   }
+   
+   .mlkpro{
+       color:#636362;
+       font-size:22px;
+       line-height:22px;
+       margin-bottom:15px;
+       width:43%;
+       margin:0 auto;
+       text-align:center;
+       
+   }
+   
+   .goodnesssec a{
+       text-decoration: none;
+   }
+   
+   .rate > input{
+       display: none;
+       float: right;
+       opacity: 0;
+       position: absolute;
+   }
+   
+   .rate{
+       display: inline-block;;
+       border: 0;
+       width: 300px;
+       margin: 0 auto 1em;
+       font-size: 45px;
+       overflow:hidden;
+   }
+   
+   .rate > label{
+       float: right;
+       color: #aaa;
+       text-decoration: none;
+       -webkit-transition: color .4s;
+       -moz-transition: color .4s;
+       -o-transition: color .4s;
+       transition: color .4s;
+   }
+   
+   /* Showing the stars */
+   .rate > label:before{
+       display: inline-block;
+       font-size: 5.1rem;
+       font-family: FontAwesome;
+       content: "\f005";
+       margin:0;
+       padding:0.3rem .2rem;
+       cursor: pointer;
+   }
+   
+   /* Half star */
+   .rate .half:before{
+       content: "\f089";
+       position: absolute;
+       padding-right: 0;
+   }
+   
+   
+   
+   /* Click and hover */
+   input:checked ~ label, label:hover ~ label{
+     color: #ffb503;
+   }
+   
+   /* hover hightlight */
+   input:checked + label:hover, input:checked ~ label:hover,input:checked ~ label:hover ~ label,
+   label:hover ~ input:checked ~ label{
+     color: #cc9000;
+   }
+   
+   .rating-star i{
+     color: #ffb503 !important;
+   }
+   
+   /* rating-list */
+.rating-stars {
+    display: inline-block;
+    vertical-align: middle;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    white-space: nowrap;
+    clear: both;
   }
- .owl-carousel img:hover{
-    
-    transform : scale(1.25);
-} */
-
-.owl-next{
- float:right;
-}
-.owl-prev{
- float:left;
-}
-.owl-prev span{
- font-size: 24px;
- font-weight: bold;
-}
-.owl-next span{
- font-size: 24px;
- font-weight: bold;
-}
-
-
-
-
-.buttermilk{
-    background-color:#fff;background-image:linear-gradient(#fff7ef, #fff);
-    background-image:-webkit-linear-gradient(#fff7ef, #fff);
-    background-image:-moz-linear-gradient(#fff7ef, #fff);
-    background-image:-ms-linear-gradient(#fff7ef, #fff);
-    background-image:-o-linear-gradient(#fff7ef, #fff);
-    padding:50px 40px;
-    border:1px solid #efe8e1;
-    padding-bottom:20px;
-}
-
-.smbg{
-    background-color:#fff;
-    background-image:linear-gradient(rgba(110, 69, 143, 0.1), #fff);
-    background-image:-webkit-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
-    background-image:-moz-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
-    background-image:-ms-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
-    background-image:-o-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
-}
-
-.curdbgpro{
-    background-color:#fff;
-    background-image:linear-gradient(rgba(10, 77, 123, 0.1), #fff);
-    background-image:-webkit-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
-    background-image:-moz-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
-    background-image:-ms-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
-    background-image:-o-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
-}
-
-.goodnessseccont img{
-    width:100%;
-}
-
-.mlkpro{
-    color:#636362;
-    font-size:22px;
-    line-height:22px;
-    margin-bottom:15px;
-    width:43%;
-    margin:0 auto;
-    text-align:center;
-    
-}
-
-.goodnesssec a{
-    text-decoration: none;
-}
-
+  .rating-stars i {
+    font-size: 14px;
+    color: #ccc;
+    display: inline;
+  }
+  .rating-stars img {
+    height: 14px;
+    max-width: none;
+  }
+  .rating-stars li {
+    display: block;
+    text-overflow: clip;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  .rating-stars li.stars-active {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  .rating-stars li.stars-active i {
+    color: orange;
+  }
+  .rating-stars.stars-lg img {
+    height: 20px;
+    max-width: none;
+  }
+   
+   
+   
+   

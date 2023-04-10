@@ -3,13 +3,14 @@ from django.views.generic import View
 from customers.models import Customer
 from shoppingcart.models import ShoppingCart
 from order.models import OrderItem, Order
+from products.models import Product
 from django.db.models import Q
 from datetime import datetime, timedelta
 from order import models
 from django.http import HttpResponse
 import random
 from django.http import JsonResponse
-from .forms import RRAddForm, ReviewForm
+from .forms import ReviewForm
 from django.contrib import messages
 
 
@@ -266,7 +267,7 @@ def searchDate(request):
     
 class RRAddView(View):
     def get(self,request):
-        form = RRAddForm()
+        form = ReviewForm()
         PONumber = request.GET.get('PONumber')
         item_id = request.GET.get('item_id')
         order = Order.objects.get(PONumber=PONumber)
@@ -274,6 +275,17 @@ class RRAddView(View):
 
         
         return render(request,'RRAdd.html', locals())
+    
+class RRAllAddView(View):
+    def get(self, request):
+        form = ReviewForm()
+        PONumber = request.GET.get('PONumber')
+
+        order = Order.objects.get(PONumber=PONumber)
+        orderitems = OrderItem.objects.filter(order=order)
+
+        return render(request,'RRAllAdd.html', locals())
+
    
 
     
@@ -283,6 +295,15 @@ def submitRR(request):
         PONumber = request.POST.get('PONumber')
         item_id = request.POST.get('item_id') 
 
+
+        product_id = OrderItem.objects.get(id=item_id).product_id
+
+        items = OrderItem.objects.filter(product_id=product_id)
+
+        avgRating = Product.objects.get(id=product_id).avgRating
+
+
+
           
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -290,6 +311,16 @@ def submitRR(request):
             myComment = form.cleaned_data['myComment']
 
             OrderItem.objects.filter(id=item_id).update(myRate=myRate,myComment=myComment)
+
+            j = 0
+            for items in items:
+                if items.myRate:
+                    j = j + 1
+
+            sumRating = avgRating * (j - 1) + myRate
+            avgRating = sumRating / j
+
+            Product.objects.filter(id=product_id).update(avgRating=avgRating)
             
 
             messages.success(request, 'Thank you! Your review has been submitted.')
