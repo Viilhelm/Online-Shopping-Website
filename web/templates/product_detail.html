@@ -82,22 +82,24 @@
         
 
 
-        <h3>Customer Reviews</h3>
-        <div class="">
+        <h3><b>Customer Reviews</b></h3>
+        <div class="card" style="">
             <div class="card-header">
                 <h4><b>Average Rating: {{avgRating}}</b></h4>
-                <div class="star-ratings-css" style="transform:scale(2); margin-left:60px; margin-bottom: 50px">
-                    <div class="star-ratings-css-top" style="width: {{width}}% ">
+                <div class="star-ratings-css" style="transform:scale(2); margin-left:60px; margin-bottom: 50px;">
+                    <div class="star-ratings-css-top" style="width: {{width}}%; white-space:nowrap">
                         <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body ">
+                <h4><b>All Ratings and Reviews:</b></h4>
+                <br>
                 {% for review in items %}
                     <h5 class="card-title"><b>{{review.order.user.username}}</b></h5>
                     <div class="card-title">
                         <div class="star-ratings-css">
-                            <div class="star-ratings-css-top" style="width: {% widthratio review.myRate 1 20 %}%">
+                            <div class="star-ratings-css-top" style="width: {% widthratio review.myRate 1 20 %}%; white-space:nowrap">
                                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                             <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                         </div>
