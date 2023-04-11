@@ -275,26 +275,22 @@ class RRAddView(View):
 
         
         return render(request,'RRAdd.html', locals())
-    
-class RRAllAddView(View):
-    def get(self, request):
-        form = ReviewForm()
-        PONumber = request.GET.get('PONumber')
 
-        order = Order.objects.get(PONumber=PONumber)
-        orderitems = OrderItem.objects.filter(order=order)
-
-        return render(request,'RRAllAdd.html', locals())
 
    
 
     
 
-def submitRR(request):
-    if request.method == 'POST':
+class submitRRView(View):
+    def get(self,request):
+        form = ReviewForm()
+        return render(request,'RRAdd.html', locals())
+    def post(self,request):
         PONumber = request.POST.get('PONumber')
         item_id = request.POST.get('item_id') 
 
+        order = Order.objects.get(PONumber=PONumber)
+        item = OrderItem.objects.get(id=item_id)
 
         product_id = OrderItem.objects.get(id=item_id).product_id
 
@@ -303,8 +299,6 @@ def submitRR(request):
         avgRating = Product.objects.get(id=product_id).avgRating
 
 
-
-          
         form = ReviewForm(request.POST)
         if form.is_valid():
             myRate = form.cleaned_data['myRate']
@@ -324,9 +318,50 @@ def submitRR(request):
             Product.objects.filter(id=product_id).update(avgRating=avgRating)
             
 
-            messages.success(request, 'Thank you! Your review has been submitted.')
-            return redirect('/home')
+            return redirect('order:order_detail', PONumber = PONumber)
+        else:
+            messages.warning(request,"Invalid Input Data")
+        return render(request,'RRAdd.html', locals())
         
 
+class RRAgainView(View):
+    def get(self,request):
+        form = ReviewForm()
+        return render(request,'RRAdd.html', locals())
+    def post(self,request):
+        PONumber = request.POST.get('PONumber')
+        item_id = request.POST.get('item_id') 
 
+        order = Order.objects.get(PONumber=PONumber)
+        item = OrderItem.objects.get(id=item_id)
+
+        product_id = OrderItem.objects.get(id=item_id).product_id
+
+        items = OrderItem.objects.filter(product_id=product_id)
+
+        avgRating = Product.objects.get(id=product_id).avgRating
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            myRate = form.cleaned_data['myRate']
+            commentAgain = form.cleaned_data['myComment']
+
+            OrderItem.objects.filter(id=item_id).update(myRate=myRate,commentAgain=commentAgain)
+
+            sumRating = 0
+            j = 0
+            for items in items:
+                if items.myRate:
+                    sumRating = sumRating + items.myRate 
+                    j = j + 1
+
+            avgRating = sumRating / j
+
+            Product.objects.filter(id=product_id).update(avgRating=avgRating)
+            
+            return redirect('order:order_detail', PONumber = PONumber)
+        else:
+            messages.warning(request,"Invalid Input Data")
+        return render(request,'RRAdd.html', locals())
+        
 

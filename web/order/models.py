@@ -29,6 +29,7 @@ class OrderItem(models.Model):
     price = models.DecimalField(default=0, max_digits=7, decimal_places=2)
     myRate = models.FloatField(null=True)
     myComment = models.CharField(max_length=1000, null=True)
+    commentAgain = models.CharField(max_length=1000, null=True)
 
     class Meta:
         unique_together = ("product","order")

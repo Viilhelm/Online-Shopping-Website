@@ -13,7 +13,7 @@ urlpatterns = [
     path("report/", views.ReportView.as_view(), name="report"),
     path("searchDate/", views.searchDate, name="searchDate"),
     path("RRAdd/", views.RRAddView.as_view(), name="RRAdd"),
-    path("RRAllAdd/", views.RRAllAddView.as_view(), name="RRAllAdd"),
-    path('submitRR/', views.submitRR, name='submitRR'),
+    path('submitRR/', views.submitRRView.as_view(), name='submitRR'),
+    path('RRAgain/', views.RRAgainView.as_view(), name='RRAgain'),
     
 ]

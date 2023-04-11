@@ -131,10 +131,13 @@ class ProductDetailView(View):
                 sumRating = sumRating + i.myRate 
                 j = j + 1
 
-        avgRating = sumRating / j
+        if j != 0:
+            avgRating = sumRating / j
 
-        product.avgRating=avgRating
-        product.save()
+            product.avgRating=avgRating
+            product.save()
+
+        
         
 
 

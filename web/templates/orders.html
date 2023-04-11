@@ -54,7 +54,7 @@
                             {% endfor %}
                             <th scope="col">Order Status</th>
                             <th scope="col">Total</th>
-                            <th scope="col"></th>
+                            
                             </tr>
                         </thead>
                         <tbody>
@@ -71,12 +71,7 @@
                                 {% endfor %}
                                 <td><a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">{{order.status}}</a></td>
                                 <td><a href="{% url 'order:order_detail' order.PONumber  %}" style="text-decoration:none; color:black">${{total}}</a></td>
-                                <td>
-                                    <form action="/RRAllAdd" class="d-inline">
-                                        <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
-                                        <button type="sumbit" class="btn btn-primary" >Rate & Review</button>
-                                    </form>
-                                </td>
+                                
                                 
                             </tr>
                             

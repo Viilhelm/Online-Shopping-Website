@@ -40,7 +40,8 @@
                                 
                                 <h5 class="card-title"></h5>                                
                                 <div class="mb-3"> 
-                                    <form action="/submitRR/" method="POST">
+                                    {% if item.myComment %}<form action="/RRAgain/" method="POST">
+                                    {% else %}<form action="/submitRR/" method="POST">{% endif %}
                                         {% csrf_token %}
                                         <h5>Write Your Review</h5>
                     
@@ -64,6 +65,10 @@
                                            
                                             <label>Review:</label>
                                             <textarea name="myComment" rows="4" class="form-control"></textarea>
+                                            {% for fm in form %}
+                                                <small class="text-danger">{{fm.errors|striptags}}</small>
+                                                <br>
+                                            {% endfor %}
                                             <br>
                                             {% if user.is_authenticated %}
                                                 {% if item %}
@@ -78,6 +83,21 @@
                                             {% endif %}
                     
                                         </div>
+                                        
+
+                                        {% if form.non_field_errors %}
+                                            {% for error in form.non_filed_errors %}
+                                                <p>{{error}}</p>
+                                            {% endfor %}
+                                        {% endif %} 
+
+                                        {% if messages %}
+                                            {% for msg in messages %}
+                                                <div class="alert alert-{{msg.tags}}" role="alert">
+                                                    {{msg}}
+                                                </div>
+                                            {% endfor %} 
+                                        {% endif %}
                                     </form>     
 
                                     
