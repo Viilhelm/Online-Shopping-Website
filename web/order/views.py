@@ -312,12 +312,13 @@ def submitRR(request):
 
             OrderItem.objects.filter(id=item_id).update(myRate=myRate,myComment=myComment)
 
+            sumRating = 0
             j = 0
             for items in items:
                 if items.myRate:
+                    sumRating = sumRating + items.myRate 
                     j = j + 1
 
-            sumRating = avgRating * (j - 1) + myRate
             avgRating = sumRating / j
 
             Product.objects.filter(id=product_id).update(avgRating=avgRating)

@@ -145,47 +145,60 @@
    .rating-star i{
      color: #ffb503 !important;
    }
-   
-   /* rating-list */
-.rating-stars {
-    display: inline-block;
-    vertical-align: middle;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+
+
+   .star-ratings-css {
+    unicode-bidi: bidi-override;
+    color: #c5c5c5;
+    font-size: 25px;
+    height: 25px;
+    width: 102px;
+    
     position: relative;
-    white-space: nowrap;
-    clear: both;
-  }
-  .rating-stars i {
-    font-size: 14px;
-    color: #ccc;
-    display: inline;
-  }
-  .rating-stars img {
-    height: 14px;
-    max-width: none;
-  }
-  .rating-stars li {
-    display: block;
-    text-overflow: clip;
-    white-space: nowrap;
-    z-index: 1;
-  }
-  .rating-stars li.stars-active {
-    z-index: 2;
+    
+    text-shadow: 0px 1px 0 #a2a2a2;
+}
+
+.star-ratings-css-top {
+    color: #e7711b;
+    padding: 0;
     position: absolute;
+    z-index: 1;
+    display: block;
     top: 0;
     left: 0;
     overflow: hidden;
-  }
-  .rating-stars li.stars-active i {
-    color: orange;
-  }
-  .rating-stars.stars-lg img {
-    height: 20px;
-    max-width: none;
-  }
+}
+
+.star-ratings-css-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+}
+
+.star-ratings-sprite {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    font-size: 0;
+    height: 21px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 110px;
+    margin: 0 auto;
+}
+
+.star-ratings-sprite-rating {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display: block;
+}
+   
+  
+
+  
+
    
    
    
