@@ -1,7 +1,5 @@
 from django.urls import path
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path("checkout/", views.Checkout.as_view(), name="checkout"),
@@ -14,5 +12,8 @@ urlpatterns = [
     path("searchOrder/", views.searchOrder, name="searchOrder"),
     path("report/", views.ReportView.as_view(), name="report"),
     path("searchDate/", views.searchDate, name="searchDate"),
+    path("RRAdd/", views.RRAddView.as_view(), name="RRAdd"),
+    path('submitRR/', views.submitRRView.as_view(), name='submitRR'),
+    path('RRAgain/', views.RRAgainView.as_view(), name='RRAgain'),
     
 ]

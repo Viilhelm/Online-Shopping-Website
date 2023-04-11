@@ -24,7 +24,7 @@ class CustomerProfileAddForm(forms.ModelForm):
         widgets={
             'fullName':forms.TextInput(attrs={'class':'form-control'}),
             'phoneNum':forms.TextInput(attrs={'class':'form-control'}),
-            'address':forms.TextInput(attrs={'class':'form-control'}),
+            'address':forms.Textarea(attrs={'class':'form-control'}),
         }
 
 

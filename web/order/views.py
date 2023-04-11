@@ -3,11 +3,15 @@ from django.views.generic import View
 from customers.models import Customer
 from shoppingcart.models import ShoppingCart
 from order.models import OrderItem, Order
+from products.models import Product
 from django.db.models import Q
 from datetime import datetime, timedelta
 from order import models
 from django.http import HttpResponse
 import random
+from django.http import JsonResponse
+from .forms import ReviewForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -35,7 +39,7 @@ def OrderCommit(request):
         PONumber=PONumber,
         customer=customer,
         user=user,
-        status="pending"
+        status="pending",
     ).save()
     order = Order.objects.get(PONumber=PONumber)
     for sc in shoppingcart:
@@ -185,14 +189,19 @@ class ReportView(View):
         for p in pName:
             dic[p] = dic.get(p, 0) + 1
 
-        tup = zip(dic.values(), dic.keys())
-        sort = list(sorted(tup, reverse=True))
+        sort = sorted(dic.items(), key=lambda kv: kv[1], reverse=True)
 
         length = len(items)
         
         total = 0
         for k, v in dic.items():
             total = total + k[1] * v
+
+        best = []
+        first = sort[0][1]
+        for i in sort:
+            if i[1] == first:
+                best.append(i)
 
         
 
@@ -203,6 +212,7 @@ class ReportView(View):
            'sort': sort,
            'length': length,
            'total': total,
+           'best': best,
         }
 
         return render(request, 'report.html', context)
@@ -211,7 +221,6 @@ def searchDate(request):
     if 'datetimepicker1' in request.GET and request.GET['datetimepicker1'] and 'datetimepicker2' in request.GET and request.GET['datetimepicker2']:
         datetimepicker1 = request.GET['datetimepicker1']
         datetimepicker2 = request.GET['datetimepicker2']
-        status = request.GET.get('status')
         
         orders = Order.objects.filter(purchaseDate__lte=datetimepicker2, purchaseDate__gte=datetimepicker1)
         items = OrderItem.objects.filter(order__in=orders)
@@ -224,14 +233,20 @@ def searchDate(request):
         for p in pName:
             dic[p] = dic.get(p, 0) + 1
 
-        tup = zip(dic.values(), dic.keys())
-        sort = list(sorted(tup, reverse=True))
+        sort = sorted(dic.items(), key=lambda kv: kv[1], reverse=True)
 
         length = len(items)
         
         total = 0
         for k, v in dic.items():
             total = total + k[1] * v
+        
+        best = []
+        first = sort[0][1]
+        for i in sort:
+            if i[1] == first:
+                best.append(i)
+        
 
         context = {
             'items': items,
@@ -239,6 +254,9 @@ def searchDate(request):
             'sort': sort,
             'length': length,
             'total': total,
+            'best': best,
+            'datetimepicker1': datetimepicker1,
+            'datetimepicker2': datetimepicker2,
         }
 
         return render(request, "searchDate.html", context)
@@ -246,4 +264,104 @@ def searchDate(request):
         return HttpResponse("Please select a date range.")
     
 
+    
+class RRAddView(View):
+    def get(self,request):
+        form = ReviewForm()
+        PONumber = request.GET.get('PONumber')
+        item_id = request.GET.get('item_id')
+        order = Order.objects.get(PONumber=PONumber)
+        item = OrderItem.objects.get(id=item_id)
+
+        
+        return render(request,'RRAdd.html', locals())
+
+
+   
+
+    
+
+class submitRRView(View):
+    def get(self,request):
+        form = ReviewForm()
+        return render(request,'RRAdd.html', locals())
+    def post(self,request):
+        PONumber = request.POST.get('PONumber')
+        item_id = request.POST.get('item_id') 
+
+        order = Order.objects.get(PONumber=PONumber)
+        item = OrderItem.objects.get(id=item_id)
+
+        product_id = OrderItem.objects.get(id=item_id).product_id
+
+        items = OrderItem.objects.filter(product_id=product_id)
+
+        avgRating = Product.objects.get(id=product_id).avgRating
+
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            myRate = form.cleaned_data['myRate']
+            myComment = form.cleaned_data['myComment']
+
+            OrderItem.objects.filter(id=item_id).update(myRate=myRate,myComment=myComment)
+
+            sumRating = 0
+            j = 0
+            for items in items:
+                if items.myRate:
+                    sumRating = sumRating + items.myRate 
+                    j = j + 1
+
+            avgRating = sumRating / j
+
+            Product.objects.filter(id=product_id).update(avgRating=avgRating)
+            
+
+            return redirect('order:order_detail', PONumber = PONumber)
+        else:
+            messages.warning(request,"Invalid Input Data")
+        return render(request,'RRAdd.html', locals())
+        
+
+class RRAgainView(View):
+    def get(self,request):
+        form = ReviewForm()
+        return render(request,'RRAdd.html', locals())
+    def post(self,request):
+        PONumber = request.POST.get('PONumber')
+        item_id = request.POST.get('item_id') 
+
+        order = Order.objects.get(PONumber=PONumber)
+        item = OrderItem.objects.get(id=item_id)
+
+        product_id = OrderItem.objects.get(id=item_id).product_id
+
+        items = OrderItem.objects.filter(product_id=product_id)
+
+        avgRating = Product.objects.get(id=product_id).avgRating
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            myRate = form.cleaned_data['myRate']
+            commentAgain = form.cleaned_data['myComment']
+
+            OrderItem.objects.filter(id=item_id).update(myRate=myRate,commentAgain=commentAgain)
+
+            sumRating = 0
+            j = 0
+            for items in items:
+                if items.myRate:
+                    sumRating = sumRating + items.myRate 
+                    j = j + 1
+
+            avgRating = sumRating / j
+
+            Product.objects.filter(id=product_id).update(avgRating=avgRating)
+            
+            return redirect('order:order_detail', PONumber = PONumber)
+        else:
+            messages.warning(request,"Invalid Input Data")
+        return render(request,'RRAdd.html', locals())
+        
 

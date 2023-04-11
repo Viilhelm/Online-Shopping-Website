@@ -26,15 +26,15 @@ $('#slider1, #slider2, #slider3').owlCarousel({
 
 
 $('.remove-cart').click(function(){
-    var id=$(this).attr("pid").toString();
-    var eml=this
+    var id = $(this).attr("pid").toString();
+    var eml = this
     $.ajax({
-        type:"GET",
-        url:"/removecart",
-        data:{
-            product_id:id
+        type: "GET",
+        url: "/removecart",
+        data: {
+            product_id : id
         },
-        success:function(data){
+        success: function(data){
             document.getElementById("totalamount").innerText=data.totalamount
             eml.parentNode.parentNode.parentNode.parentNode.remove() 
         }

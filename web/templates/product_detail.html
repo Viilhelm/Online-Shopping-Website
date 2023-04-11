@@ -2,6 +2,56 @@
 {% load static %}
 {% block title %}Product Detail{% endblock title %}
 {% block main-content %}
+<style type="text/css">
+    .star-ratings-css {
+        unicode-bidi: bidi-override;
+        color: #c5c5c5;
+        font-size: 25px;
+        height: 25px;
+        width: 102px;
+        
+        position: relative;
+        
+        text-shadow: 0px 1px 0 #a2a2a2;
+    }
+
+    .star-ratings-css-top {
+        color: #e7711b;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+    .star-ratings-css-bottom {
+        padding: 0;
+        display: block;
+        z-index: 0;
+    }
+
+    .star-ratings-sprite {
+        background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+        font-size: 0;
+        height: 21px;
+        line-height: 0;
+        overflow: hidden;
+        text-indent: -999em;
+        width: 110px;
+        margin: 0 auto;
+    }
+
+    .star-ratings-sprite-rating {
+        background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+        background-position: 0 100%;
+        float: left;
+        height: 21px;
+        display: block;
+    }
+</style>
+
     <div class="container">
         <div class="row flex justify-content-between">
             <div class="img2 col-lg-4 mt-3 mb-5">
@@ -28,5 +78,46 @@
                 {% endfor %}
             </div>
         </div>
+
+        
+
+
+        <h3><b>Customer Reviews</b></h3>
+        <div class="card" style="">
+            <div class="card-header">
+                <h4><b>Average Rating: {{avgRating}}</b></h4>
+                <div class="star-ratings-css" style="transform:scale(2); margin-left:60px; margin-bottom: 50px;">
+                    <div class="star-ratings-css-top" style="width: {{width}}%; white-space:nowrap">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                </div>
+            </div>
+            <div class="card-body ">
+                <h4><b>All Ratings and Reviews:</b></h4>
+                <br>
+                {% for review in items %}
+                    <h5 class="card-title"><b>{{review.order.user.username}}</b></h5>
+                    <div class="card-title">
+                        <div class="star-ratings-css">
+                            <div class="star-ratings-css-top" style="width: {% widthratio review.myRate 1 20 %}%; white-space:nowrap">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                            <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                        </div>
+                        <br>
+
+                    </div>
+                    <p class="card-text">{% if review.myComment %} {{review.myComment}} {% endif %}</p>
+                    <div class="card-text">{% if review.commentAgain %} <b>Additional comment: </b>{{review.commentAgain}} {% endif %}</div>
+                    {% if forloop.last %}
+                    <div></div>
+                    {% else %}
+                      <div style="border:1px solid #CCC"></div> 
+                    {% endif %}
+                {% endfor %}
+            </div>
+          </div>
+        
+       
+
     </div>
 {% endblock main-content %}

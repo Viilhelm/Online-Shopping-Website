@@ -5,6 +5,7 @@
 {% block main-content %}
 <div class="container">
   <h2>Sales Report</h2>
+  <h5>The reporting period: {{datetimepicker1}}-{{datetimepicker2}}.</h5>
   <div class="row">
     <form method="get" role="search" action="{% url 'order:searchDate' %}">
       <div class='col-sm-5'>
@@ -70,13 +71,13 @@
         </thead>
         <tbody>
             
-            {% for key,value in dic.items %}
+            {% for sort in sort %}
             <tr>
                 <th scope="row"></th>
-                <th>《{{ key.0 }}》</th>
-                <td>${{ key.1}}</td>
-                <td>{{ value }}</td>
-                <td>${{ key.1 |div:value }}</td>
+                <th>《{{ sort.0.0 }}》</th>
+                <td>${{ sort.0.1}}</td>
+                <td>{{ sort.1 }}</td>
+                <td>${{ sort.0.1 |div:sort.1 }}</td>
             </tr>
             {% endfor %}
             <tr>
@@ -88,7 +89,13 @@
             </tr>
         </tbody>
         </table>
-    <h2>The best selling product is 《{{sort.0.1.0}}》.</h2>
+    <h2>The best selling products:
+      {% for best in best %}
+        {% if forloop.counter == 1 %}《{{best.0.0}}》
+        {% else %} 《{{best.0.0}}》
+        {% endif %}
+      {% endfor %}
+    .</h2>
   {% endif %}
 </div>
 {% endblock main-content %}

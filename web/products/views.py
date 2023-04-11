@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View, TemplateView, ListView, DetailView
 from products.models import Product, Category
+from order.models import OrderItem
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -113,14 +114,34 @@ class CategoryView(View):
  
    
 
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = 'product_detail.html'
+class ProductDetailView(View):
+   def get(self, request, pk):
+        
+        product = Product.objects.get(id=pk)
+        items = OrderItem.objects.filter(product=product)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['section'] = "productDetail"
-        return context
+        avgRating = product.avgRating
+
+        width = (avgRating / 5) * 100
+
+        sumRating = 0
+        j = 0
+        for i in items:
+            if i.myRate:
+                sumRating = sumRating + i.myRate 
+                j = j + 1
+
+        if j != 0:
+            avgRating = sumRating / j
+
+            product.avgRating=avgRating
+            product.save()
+
+        
+        
+
+
+        return render(request, 'product_detail.html', locals())
 
 
     

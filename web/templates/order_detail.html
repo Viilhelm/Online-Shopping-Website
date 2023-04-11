@@ -27,6 +27,34 @@
                             <p>Price: ${{item.price}}</p>
                             <p>Subtotal: ${{item.price}}</p>
                         </div>
+                        {% for group in request.user.groups.all %}
+                            {% if group.name == 'Customer' %}
+                                {% if order.status == 'shipped' %}
+                                    <div class="col-sm-12">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            {% if item.myRate %}
+                                                {% if item.commentAgain %}
+                                                    <button type="button" class="btn btn-secondary" disabled>Rate & Review Ended</button>
+                                                {% else %}
+                                                    <form action="/RRAdd" class="d-inline">
+                                                        <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
+                                                        <input type="hidden" id="item_id" name="item_id" value="{{item.id}}" />
+                                                        <button type="sumbit" class="btn btn-primary" >Rate & Review Again</button>
+                                                    </form>
+                                                {% endif %}
+                                            {% else %}
+                                                <form action="/RRAdd" class="d-inline">
+                                                    <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
+                                                    <input type="hidden" id="item_id" name="item_id" value="{{item.id}}" />
+                                                    <button type="sumbit" class="btn btn-primary" >Rate & Review</button>
+                                                </form>
+                                            {% endif %}
+                                        </div> 
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+
                     </div>
                 </div>
                 <br>

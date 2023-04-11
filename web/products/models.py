@@ -10,7 +10,7 @@ class Product(models.Model):
     introduction = models.TextField(max_length=1000)
     image = models.ImageField(upload_to='product')
     category = models.ForeignKey('Category', related_name="products", on_delete=models.CASCADE,)
-    avgRating = models.DecimalField(default=0, max_digits=3, decimal_places=2)
+    avgRating = models.FloatField(default=0)
     def __str__(self):
         return self.productName
 
