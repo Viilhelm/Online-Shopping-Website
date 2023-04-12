@@ -123,10 +123,8 @@
                     {% endif %}
                     <p class="card-text">{% if review.myComment %} {{review.myComment}} {% endif %}</p>
                     <div class="card-text">{% if review.commentAgain %} <b>Additional comment: </b>{{review.commentAgain}} {% endif %}</div>
-                    {% if forloop.last %}
-                    <div></div>
-                    {% else %}
-                      <div style="border:1px solid #CCC"></div> 
+                    {% if review.myRate %}
+                    <div style="border:1px solid #CCC"></div> 
                     {% endif %}
                 {% endfor %}
             </div>
