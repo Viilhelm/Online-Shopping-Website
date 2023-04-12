@@ -59,6 +59,11 @@
             </div>
             <div class="productdetail col-lg-8">
                 <h1> Name: 《{{product.productName}}》 </h1>
+                {% if product.avgRating < 2 and product.avgRating > 0 %}
+                <div class="alert alert-warning" role="alert">
+                    The average rating for this book is below two! Please buy carefully!
+                </div>
+                {% endif %}
                 <h5> Author: {{product.author}} </h5>
                 <h5> Publisher: {{product.publisher}} </h5>
                 <h5> Price: ${{product.price}} </h5>
@@ -72,6 +77,14 @@
                             <input type="hidden" id="product_id" name="product_id" value="{{product.id}}" />
                             <button type="sumbit" class="d-grid gap-2 btn btn-danger p-1 m-1 btn-1g text-decoration-none text-white" >Add to Cart</button>
                         </form>
+
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-{{msg.tags}}" role="alert">
+                                    {{msg}}
+                                </div>
+                            {% endfor %} 
+                        {% endif %}
 
                 
                     {% endif %}
