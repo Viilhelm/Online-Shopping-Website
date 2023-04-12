@@ -109,6 +109,7 @@
                 <h4><b>All Ratings and Reviews:</b></h4>
                 <br>
                 {% for review in items %}
+                    {% if review.myRate %}
                     <h5 class="card-title"><b>{{review.order.user.username}}</b></h5>
                     <div class="card-title">
                         <div class="star-ratings-css">
@@ -119,6 +120,7 @@
                         <br>
 
                     </div>
+                    {% endif %}
                     <p class="card-text">{% if review.myComment %} {{review.myComment}} {% endif %}</p>
                     <div class="card-text">{% if review.commentAgain %} <b>Additional comment: </b>{{review.commentAgain}} {% endif %}</div>
                     {% if forloop.last %}
