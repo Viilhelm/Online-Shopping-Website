@@ -17,8 +17,6 @@ def CartAdd(request):
             messages.warning(request,"The product is already in the shopping cart!")
             return render(request,'product_detail.html',locals())
             
-            
-        
     ShoppingCart(user=user, product=product).save()
     return redirect('/shoppingcart')
 
