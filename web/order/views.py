@@ -240,26 +240,16 @@ def searchDate(request):
         total = 0
         for k, v in dic.items():
             total = total + k[1] * v
-        
-        best = []
-        first = sort[0][1]
-        for i in sort:
-            if i[1] == first:
-                best.append(i)
+        if items:
+            best = []
+            first = sort[0][1]
+            for i in sort:
+                if i[1] == first:
+                    best.append(i)
         
 
-        context = {
-            'items': items,
-            'dic': dic,
-            'sort': sort,
-            'length': length,
-            'total': total,
-            'best': best,
-            'datetimepicker1': datetimepicker1,
-            'datetimepicker2': datetimepicker2,
-        }
 
-        return render(request, "searchDate.html", context)
+        return render(request, "searchDate.html", locals())
     else:
         return HttpResponse("Please select a date range.")
     

@@ -21,9 +21,9 @@
                         <a href="{% url 'products:category' category.id 1 %}?sort=price" {% if sort == 'price' %}class="active"{% endif %}>Price</a>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row g-2">
                     {% for product in productsPage %}
-                        <div class="col text-center mb-4">
+                        <div class="col-6 text-center mb-4">
                             <a href="{% url 'products:product_detail' product.id %}" class="btn">
                                 <div>
                                     <img src="{{product.image.url}}" width="200px" height="300px">

@@ -32,7 +32,7 @@ class ProductListView(View):
     
 
         # 对商品进行分页s
-        paginator = Paginator(products, 2)
+        paginator = Paginator(products, 6)
 
         page = request.GET.get('page')
 
@@ -83,7 +83,7 @@ class CategoryView(View):
       
 
         # 对商品进行分页s
-        paginator = Paginator(products, 2)
+        paginator = Paginator(products, 6)
 
         page = request.GET.get('page')
 
@@ -156,7 +156,7 @@ def searchProducts(request):
         
 
         # 对商品进行分页s
-        paginator = Paginator(products, 2)
+        paginator = Paginator(products, 6)
 
         page = request.GET.get('page')
 
