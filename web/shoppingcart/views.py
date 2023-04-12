@@ -18,9 +18,9 @@ def CartAdd(request):
             return render(request,'product_detail.html',locals())
             
             
-    else:
-        ShoppingCart(user=user, product=product).save()
-        return redirect('/shoppingcart')
+        
+    ShoppingCart(user=user, product=product).save()
+    return redirect('/shoppingcart')
 
     
 
