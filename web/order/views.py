@@ -132,28 +132,20 @@ class OrderDetailView(View):
 
         return render(request, 'order_detail.html', context)
     
-def vendorShip(request):
+def orderChange(request):
     status = request.GET.get('status')
     PONumber = request.GET.get('PONumber')
-    shipmentDate = datetime.now()
-    Order.objects.filter(PONumber=PONumber).update(status=status,shipmentDate=shipmentDate)
+    if status == 'shipped':
+        shipmentDate = datetime.now()
+        Order.objects.filter(PONumber=PONumber).update(status=status,shipmentDate=shipmentDate)
+    elif status == 'cancel':
+        cancelDate = datetime.now()
+        Order.objects.filter(PONumber=PONumber).update(status=status,cancelDate=cancelDate)
+    else:
+        Order.objects.filter(PONumber=PONumber).update(status=status)
 
     return redirect('order:order_detail', PONumber = PONumber)
 
-def vendorCancel(request):
-    status = request.GET.get('status')
-    PONumber = request.GET.get('PONumber')
-    cancelDate = datetime.now()
-    Order.objects.filter(PONumber=PONumber).update(status=status,cancelDate=cancelDate)
-
-    return redirect('order:order_detail', PONumber = PONumber)
-
-def vendorHold(request):
-    status = request.GET.get('status')
-    PONumber = request.GET.get('PONumber')
-    Order.objects.filter(PONumber=PONumber).update(status=status)
-
-    return redirect('order:order_detail', PONumber = PONumber)
 
 def searchOrder(request):
     if 'search' in request.GET and request.GET['search']:
