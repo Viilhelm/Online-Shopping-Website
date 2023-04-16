@@ -13,6 +13,9 @@ class Product(models.Model):
     avgRating = models.FloatField(default=0)
     def __str__(self):
         return self.productName
+    
+    class Meta:
+        indexes = [models.Index(fields=['productName', 'id']),]
 
 
 class Category(models.Model):

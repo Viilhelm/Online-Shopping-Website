@@ -121,9 +121,7 @@ def searchProducts(request):
             products = Product.objects.filter(Q(productName__icontains=query) | Q(id__exact=query))
         else:
             products = Product.objects.filter(Q(productName__icontains=query) )
-        
-
-        # 对商品进行分页s
+  
         paginator = Paginator(products, 6)
 
         page = request.GET.get('page')

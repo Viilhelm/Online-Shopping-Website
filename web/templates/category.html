@@ -38,7 +38,6 @@
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                       
                             <li class="page-item">
                                 {% if productsPage.has_previous %}
                                     <a class="page-link" href="{% url 'products:category' category.id productsPage.previous_page_number %}?page={{ productsPage.previous_page_number }}&sort={{ sort }}" aria-label="Previous">
@@ -60,7 +59,6 @@
                                 {% endif %}
                             {% endfor %}
 
-
                             {% if productsPage.has_next %}
                                 <li class="page-item">
                                     <a class="page-link" href="{% url 'products:category' category.id productsPage.paginator.num_pages %}?page={{ productsPage.next_page_number }}&sort={{ sort }}" aria-label="Next">
@@ -68,10 +66,7 @@
                                     <span class="sr-only">Next</span>
                                     </a>
                                 </li>
-                            {% endif %}
-
-
-                       
+                            {% endif %}   
                     </ul>
                 </nav>
 
