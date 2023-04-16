@@ -17,12 +17,6 @@ class HomePageView(TemplateView):
 
 class ProductListView(View):
     def get(self, request):
-        """显示列表页"""
-        
-        # 获取排序方式
-        # sort=default 按照默认id排序
-        # sort=price 按照商品价格排序
- 
         sort = request.GET.get('sort')
         if sort == 'price':
             products = Product.objects.all().order_by('price')
@@ -30,23 +24,14 @@ class ProductListView(View):
             sort = 'default'
             products = Product.objects.all()
     
-
-        # 对商品进行分页s
         paginator = Paginator(products, 6)
 
         page = request.GET.get('page')
 
         productsPage = paginator.get_page(page)
 
-        # 获取商品的分类信息
         categories = Category.objects.all()
 
-        
-
-        
-
-
-        # 组织上下文
         context = {
            
             'productsPage': productsPage,
@@ -56,7 +41,6 @@ class ProductListView(View):
             'page': page,
         }
 
-
         return render(request, 'products.html', context)
 
 
@@ -64,15 +48,10 @@ class ProductListView(View):
 
 class CategoryView(View):
     def get(self, request, category_id, page):
-        """显示列表页"""
-        # 获取种类信息
         try:
             category = Category.objects.get(id=category_id)
         except Category.DoesNotExist :
             return redirect(reverse('products:index'))
-        # 获取排序方式
-        # sort=default 按照默认id排序
-        # sort=price 按照商品价格排序
  
         sort = request.GET.get('sort')
         if sort == 'price':
@@ -81,24 +60,14 @@ class CategoryView(View):
             sort = 'default'
             products = Product.objects.filter(category=category)
       
-
-        # 对商品进行分页s
         paginator = Paginator(products, 6)
 
         page = request.GET.get('page')
 
         productsPage = paginator.get_page(page)
 
-
-        # 获取商品的分类信息
         categories = Category.objects.all()
 
-        
-
-        
-
-
-        # 组织上下文
         context = {
             'category': category,
             'productsPage': productsPage,
@@ -107,7 +76,6 @@ class CategoryView(View):
             'sort': sort,
             'page': page,
         }
-
 
         return render(request, 'category.html', context)
 

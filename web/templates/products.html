@@ -39,7 +39,6 @@
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                       
                             <li class="page-item">
                                 {% if productsPage.has_previous %}
                                     <a class="page-link" href="{% url 'products:products'  %}?page={{ productsPage.previous_page_number }}&sort={{ sort }}" aria-label="Previous">
@@ -48,7 +47,7 @@
                                     </a>
                                 {% endif %}
                             </li>
-                                
+                               
                             {% for pindex in productsPage.paginator.page_range %}
                                 {% if pindex == productsPage.number %}
                                     <li class="page-item active">
@@ -61,7 +60,6 @@
                                 {% endif %}
                             {% endfor %}
 
-
                             {% if productsPage.has_next %}
                                 <li class="page-item">
                                     <a class="page-link" href="{% url 'products:products'  %}?page={{ productsPage.next_page_number }}&sort={{ sort }}" aria-label="Next">
@@ -70,9 +68,6 @@
                                     </a>
                                 </li>
                             {% endif %}
-
-
-                       
                     </ul>
                 </nav>
 
