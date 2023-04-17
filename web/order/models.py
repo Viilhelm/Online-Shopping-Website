@@ -31,6 +31,7 @@ class OrderItem(models.Model):
     myComment = models.CharField(max_length=1000, null=True)
     commentAgain = models.CharField(max_length=1000, null=True)
     RRDate = models.DateTimeField(null=True)
+    CanRRAgain = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("product","order")

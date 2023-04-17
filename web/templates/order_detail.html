@@ -26,6 +26,7 @@
                             <p>Quantity: 1 </p>
                             <p>Price: ${{item.price}}</p>
                             <p>Subtotal: ${{item.price}}</p>
+                            {{item.RRDate }}
                         </div>
                         {% for group in request.user.groups.all %}
                             {% if group.name == 'Customer' %}
@@ -37,18 +38,15 @@
                                                     <button type="button" class="btn btn-secondary" disabled>Rate & Review Ended</button>
                                                 {% else %}
                                                     {% if item.RRDate %}
-                                                        {% with diff=nowDate|add:item.RRDate %}
-                                                        {% if diff > 3 %}
+                                                        {% if item.CanRRAgain %}
                                                         <form action="/RRAdd" class="d-inline">
                                                             <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
                                                             <input type="hidden" id="item_id" name="item_id" value="{{item.id}}" />
                                                             <button type="sumbit" class="btn btn-primary" >Rate & Review Again</button>
                                                         </form>
                                                         {% else %}
-                                                        {{diff}}
                                                         <button type="button" class="btn btn-secondary" disabled>Rate & Review Again</button>
                                                         {% endif %}
-                                                        {% endwith %}
                                                     {% endif %}
                                                 {% endif %}
                                             {% else %}

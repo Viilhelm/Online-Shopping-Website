@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from order import models
 from django.http import HttpResponse
 import random
-from django.http import JsonResponse
+from django.utils.timezone import localdate
 from .forms import ReviewForm
 from django.contrib import messages
 
@@ -120,6 +120,9 @@ class OrderDetailView(View):
         for oi in orderitems:
             value = oi.price
             total = total + value
+            if datetime.now().timestamp() > (oi.RRDate + timedelta(days=3)).timestamp():
+                CanRRAgain = True
+                OrderItem.objects.filter(id=oi.id).update(CanRRAgain=CanRRAgain)
 
         customer = Customer.objects.filter(user=request.user)        
         
@@ -361,7 +364,7 @@ class RRAgainView(View):
             myRate = form.cleaned_data['myRate']
             commentAgain = form.cleaned_data['myComment']
 
-            OrderItem.objects.filter(id=item_id).update(myRate=myRate,commentAgain=commentAgain)
+            OrderItem.objects.filter(id=item_id).update(myRate=myRate,commentAgain=commentAgain, CanRRAgain=False)
 
             sumRating = 0
             j = 0
