@@ -58,6 +58,15 @@
   {% if items|length == 0  %}
     <h3>There are no orders for this time period.</h3>
   {% else %}
+  <div class="sort_bar">
+    Sorting Method: 
+    {% if datetimepicker1 %}
+      {% if datetimepicker2 %}
+        <a href="{% url 'order:searchDate'  %}?datetimepicker1={{datetimepicker1}}&datetimepicker2={{datetimepicker2}}&sort=quantity" {% if sort == 'quantity' %}class="active"{% endif %}>Quantity(Default)</a> OR
+        <a href="{% url 'order:searchDate'  %}?datetimepicker1={{datetimepicker1}}&datetimepicker2={{datetimepicker2}}&sort=amount" {% if sort == 'amount' %}class="active"{% endif %}>Amount</a>
+      {% endif %}
+    {% endif %}
+  </div>
     <table class="table">
         <thead>
             <tr>
@@ -88,7 +97,7 @@
             </tr>
         </tbody>
         </table>
-    <h2>The best selling products:
+    <h2>The best selling product(s):
       {% for best in best %}
         {% if forloop.counter == 1 %}《{{best.0.0}}》
         {% else %} 《{{best.0.0}}》

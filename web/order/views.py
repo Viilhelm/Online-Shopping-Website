@@ -199,9 +199,12 @@ class ReportView(View):
             amount = s[0][1] * s[1]
             s.append(amount)
 
-        sortList.sort(key=lambda x:(-x[1],-x[2]))
-
-
+        choose = request.GET.get('sort')
+        if choose == 'amount':
+            sortList.sort(key=lambda x:(-x[2],-x[1]))
+        else:
+            choose = 'quantity'
+            sortList.sort(key=lambda x:(-x[1],-x[2]))
 
         length = len(items)
         
@@ -210,10 +213,12 @@ class ReportView(View):
             total = total + k[1] * v
 
         best = []
-        first = sort[0][1]
-        for i in sort:
-            if i[1] == first:
-                best.append(i)
+        firstP = sortList[0][1]
+        firstA = sortList[0][2]
+        for i in sortList:
+            if i[1] == firstP:
+                if i[2] == firstA:
+                    best.append(i)
 
         
 
@@ -258,8 +263,12 @@ def searchDate(request):
             amount = s[0][1] * s[1]
             s.append(amount)
 
-        sortList.sort(key=lambda x:(-x[1],-x[2]))
-
+        choose = request.GET.get('sort')
+        if choose == 'amount':
+            sortList.sort(key=lambda x:(-x[2],-x[1]))
+        else:
+            choose = 'quantity'
+            sortList.sort(key=lambda x:(-x[1],-x[2]))
 
         length = len(items)
         
@@ -268,10 +277,12 @@ def searchDate(request):
             total = total + k[1] * v
         if items:
             best = []
-            first = sort[0][1]
-            for i in sort:
-                if i[1] == first:
-                    best.append(i)
+            firstP = sortList[0][1]
+            firstA = sortList[0][2]
+            for i in sortList:
+                if i[1] == firstP:
+                    if i[2] == firstA:
+                      best.append(i)
         
 
 

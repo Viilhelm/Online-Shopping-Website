@@ -56,6 +56,11 @@
       });
       </script>
   </div>
+  <div class="sort_bar">
+    Sorting Method:
+    <a href="{% url 'order:report'  %}?sort=quantity" {% if sort == 'quantity' %}class="active"{% endif %}>Quantity(Default)</a> OR 
+    <a href="{% url 'order:report'  %}?sort=amount" {% if sort == 'amount' %}class="active"{% endif %}>Amount</a>
+  </div>
   <table class="table">
       <thead>
         <tr>
@@ -86,9 +91,9 @@
           </tr>
       </tbody>
     </table>
-    <h2>The best selling products:
+    <h2>The best selling product(s):
       {% for best in best %}
-        {% if forloop.counter == 1 %}《{{best.0.0}}》 {{sortList}} 
+        {% if forloop.counter == 1 %}《{{best.0.0}}》
         {% else %} 《{{best.0.0}}》 
         {% endif %}
       {% endfor %}
