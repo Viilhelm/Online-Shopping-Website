@@ -231,6 +231,7 @@ class ReportView(View):
            'total': total,
            'best': best,
            'sortList': sortList,
+           'choose': choose,
         }
 
         return render(request, 'report.html', context)

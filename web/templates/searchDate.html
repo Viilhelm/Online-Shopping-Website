@@ -66,6 +66,7 @@
         <a href="{% url 'order:searchDate'  %}?datetimepicker1={{datetimepicker1}}&datetimepicker2={{datetimepicker2}}&sort=amount" {% if sort == 'amount' %}class="active"{% endif %}>Amount</a>
       {% endif %}
     {% endif %}
+    <div>Currently sorted by: <b>{{ choose }}</b></div>
   </div>
     <table class="table">
         <thead>

@@ -60,6 +60,7 @@
     Sorting Method:
     <a href="{% url 'order:report'  %}?sort=quantity" {% if sort == 'quantity' %}class="active"{% endif %}>Quantity(Default)</a> OR 
     <a href="{% url 'order:report'  %}?sort=amount" {% if sort == 'amount' %}class="active"{% endif %}>Amount</a>
+    <div>Currently sorted by: <b>{{ choose }}</b></div>    
   </div>
   <table class="table">
       <thead>

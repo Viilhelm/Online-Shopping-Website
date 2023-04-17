@@ -20,6 +20,7 @@
                         Sorting Method: 
                         <a href="{% url 'products:category' category.id 1 %}?sort=default" {% if sort == 'default' %}class="active"{% endif %}>Default</a> OR
                         <a href="{% url 'products:category' category.id 1 %}?sort=price" {% if sort == 'price' %}class="active"{% endif %}>Price(low to high)</a>
+                        <div>Currently sorted by: <b>{{ sort }}</b></div>
                     </div>
                 </div>
                 <div class="row g-2">
