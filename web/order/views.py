@@ -99,9 +99,6 @@ class OrdersView(View):
 
 class OrderDetailView(View):
     def get(self, request, PONumber):
-        """显示列表页"""
-
-        # 获取订单信息
         filter = request.GET.get('filter')
         if filter == 'allVendor':
             orders = Order.objects.all().order_by('-purchaseDate')
@@ -114,8 +111,6 @@ class OrderDetailView(View):
         
         orderitems = OrderItem.objects.filter(order=order)
  
-        nowDate = datetime.now()
-
         total = 0
         for oi in orderitems:
             value = oi.price
@@ -124,13 +119,13 @@ class OrderDetailView(View):
                 if datetime.now().timestamp() > (oi.RRDate + timedelta(days=3)).timestamp():
                     CanRRAgain = True
                     OrderItem.objects.filter(id=oi.id).update(CanRRAgain=CanRRAgain)
+                else: 
+                    CanRRAgain = False
+                    OrderItem.objects.filter(id=oi.id).update(CanRRAgain=CanRRAgain)
 
         customer = Customer.objects.filter(user=request.user)        
         
-
-      # 组织上下文
         context = {
-            'nowDate': nowDate,
             'order': order,
             'orderitems': orderitems,
             'total':total,
