@@ -120,9 +120,10 @@ class OrderDetailView(View):
         for oi in orderitems:
             value = oi.price
             total = total + value
-            if datetime.now().timestamp() > (oi.RRDate + timedelta(days=3)).timestamp():
-                CanRRAgain = True
-                OrderItem.objects.filter(id=oi.id).update(CanRRAgain=CanRRAgain)
+            if oi.RRDate:
+                if datetime.now().timestamp() > (oi.RRDate + timedelta(days=3)).timestamp():
+                    CanRRAgain = True
+                    OrderItem.objects.filter(id=oi.id).update(CanRRAgain=CanRRAgain)
 
         customer = Customer.objects.filter(user=request.user)        
         
