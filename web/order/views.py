@@ -113,18 +113,19 @@ class OrderDetailView(View):
         order = Order.objects.get(PONumber=PONumber)
         
         orderitems = OrderItem.objects.filter(order=order)
+ 
+        nowDate = datetime.now()
 
         total = 0
         for oi in orderitems:
             value = oi.price
             total = total + value
-        
-        
+                    
         
 
       # 组织上下文
         context = {
-           
+            'nowDate': nowDate,
             'order': order,
             'orderitems': orderitems,
             'total':total,
@@ -183,6 +184,20 @@ class ReportView(View):
 
         sort = sorted(dic.items(), key=lambda kv: kv[1], reverse=True)
 
+        sortList = []
+        for t in sort:
+            l = list(t)
+            sortList.append(l)
+
+        amount = 0
+        for s in sortList:
+            amount = s[0][1] * s[1]
+            s.append(amount)
+
+        sortList.sort(key=lambda x:(-x[1],-x[2]))
+
+
+
         length = len(items)
         
         total = 0
@@ -205,6 +220,7 @@ class ReportView(View):
            'length': length,
            'total': total,
            'best': best,
+           'sortList': sortList,
         }
 
         return render(request, 'report.html', context)
@@ -226,6 +242,19 @@ def searchDate(request):
             dic[p] = dic.get(p, 0) + 1
 
         sort = sorted(dic.items(), key=lambda kv: kv[1], reverse=True)
+
+        sortList = []
+        for t in sort:
+            l = list(t)
+            sortList.append(l)
+
+        amount = 0
+        for s in sortList:
+            amount = s[0][1] * s[1]
+            s.append(amount)
+
+        sortList.sort(key=lambda x:(-x[1],-x[2]))
+
 
         length = len(items)
         
@@ -286,7 +315,9 @@ class submitRRView(View):
             myRate = form.cleaned_data['myRate']
             myComment = form.cleaned_data['myComment']
 
-            OrderItem.objects.filter(id=item_id).update(myRate=myRate,myComment=myComment)
+            RRDate = datetime.now()
+
+            OrderItem.objects.filter(id=item_id).update(myRate=myRate,myComment=myComment, RRDate=RRDate)
 
             sumRating = 0
             j = 0

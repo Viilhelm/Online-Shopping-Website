@@ -36,11 +36,19 @@
                                                 {% if item.commentAgain %}
                                                     <button type="button" class="btn btn-secondary" disabled>Rate & Review Ended</button>
                                                 {% else %}
-                                                    <form action="/RRAdd" class="d-inline">
-                                                        <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
-                                                        <input type="hidden" id="item_id" name="item_id" value="{{item.id}}" />
-                                                        <button type="sumbit" class="btn btn-primary" >Rate & Review Again</button>
-                                                    </form>
+                                                    {% if item.RRDate %}
+                                                        {% with diff=nowDate|add:item.RRDate %}
+                                                        {% if diff > 3 %}
+                                                        <form action="/RRAdd" class="d-inline">
+                                                            <input type="hidden" id="PONumber" name="PONumber" value="{{order.PONumber}}" />
+                                                            <input type="hidden" id="item_id" name="item_id" value="{{item.id}}" />
+                                                            <button type="sumbit" class="btn btn-primary" >Rate & Review Again</button>
+                                                        </form>
+                                                        {% else %}
+                                                        <button type="button" class="btn btn-secondary" disabled>Rate & Review Again</button>
+                                                        {% endif %}
+                                                        {% endwith %}
+                                                    {% endif %}
                                                 {% endif %}
                                             {% else %}
                                                 <form action="/RRAdd" class="d-inline">

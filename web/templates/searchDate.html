@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load templatehelper %}
 {% block title %}Sales Report{% endblock title %}
 {% block main-content %}
 <div class="container">
@@ -71,13 +70,13 @@
         </thead>
         <tbody>
             
-            {% for sort in sort %}
+            {% for sort in sortList %}
             <tr>
                 <th scope="row"></th>
                 <th>《{{ sort.0.0 }}》</th>
                 <td>${{ sort.0.1}}</td>
                 <td>{{ sort.1 }}</td>
-                <td>${{ sort.0.1 |div:sort.1 }}</td>
+                <td>${{ sort.2 }}</td>
             </tr>
             {% endfor %}
             <tr>

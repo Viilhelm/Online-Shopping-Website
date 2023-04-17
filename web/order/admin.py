@@ -8,4 +8,4 @@ class OrderlAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['id','product','order','price','myRate','myComment']
+    list_display = ['id','product','order','price','myRate','myComment','commentAgain','RRDate']

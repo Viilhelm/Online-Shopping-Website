@@ -30,6 +30,7 @@ class OrderItem(models.Model):
     myRate = models.FloatField(null=True)
     myComment = models.CharField(max_length=1000, null=True)
     commentAgain = models.CharField(max_length=1000, null=True)
+    RRDate = models.DateTimeField(null=True)
 
     class Meta:
         unique_together = ("product","order")
