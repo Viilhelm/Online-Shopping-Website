@@ -120,7 +120,8 @@ class OrderDetailView(View):
         for oi in orderitems:
             value = oi.price
             total = total + value
-                    
+
+        customer = Customer.objects.filter(user=request.user)        
         
 
       # 组织上下文
@@ -129,6 +130,7 @@ class OrderDetailView(View):
             'order': order,
             'orderitems': orderitems,
             'total':total,
+            'customer': customer,
         }
 
         return render(request, 'order_detail.html', context)

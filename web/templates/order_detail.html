@@ -45,6 +45,7 @@
                                                             <button type="sumbit" class="btn btn-primary" >Rate & Review Again</button>
                                                         </form>
                                                         {% else %}
+                                                        {{diff}}
                                                         <button type="button" class="btn btn-secondary" disabled>Rate & Review Again</button>
                                                         {% endif %}
                                                         {% endwith %}
@@ -80,7 +81,7 @@
             
             {% for c in customer %}
                 <p>Customer Name: {{c.fullName}}</P>
-                <p>Shipping Address: {{c.adress}}</p>
+                <p>Shipping Address: {{c.address}}</p>
             {% endfor %}
             <h3>Total: ${{total}}</h3>
             {% for group in request.user.groups.all %}
