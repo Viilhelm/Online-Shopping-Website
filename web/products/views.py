@@ -101,13 +101,7 @@ class ProductDetailView(View):
 
         if j != 0:
             avgRating = sumRating / j
-
-            product.avgRating=avgRating
-            product.save()
-
-        
-        
-
+            Product.objects.filter(id=pk).update(avgRating=avgRating)
 
         return render(request, 'product_detail.html', locals())
 
