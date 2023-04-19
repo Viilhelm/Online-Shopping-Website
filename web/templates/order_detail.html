@@ -75,11 +75,10 @@
                         <p>Cancel Person: Vendor1 </p>
                     {% endif %}
                 </div>
-            
-            {% for c in customer %}
-                <p>Customer Name: {{c.fullName}}</P>
-                <p>Shipping Address: {{c.address}}</p>
-            {% endfor %}
+           
+                <p>Customer Name: {{order.customer.fullName}}</P>
+                <p>Shipping Address: {{order.customer.address}}</p>
+        
             <h3>Total: ${{total}}</h3>
             {% for group in request.user.groups.all %}
                 {% if group.name == 'Vendor' %}
