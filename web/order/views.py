@@ -9,7 +9,6 @@ from datetime import datetime, timedelta
 from order import models
 from django.http import HttpResponse
 import random
-from django.utils.timezone import localdate
 from .forms import ReviewForm
 from django.contrib import messages
 
@@ -51,10 +50,8 @@ def OrderCommit(request):
 
 class OrdersView(View):
     def get(self, request):
-        """显示列表页"""
         user = request.user
 
-        # 获取订单信息
         filter = request.GET.get('filter')
         if filter == 'current':
             orders = Order.objects.filter(Q(user=user) & (Q(status="pending") | Q(status="hold"))).order_by('-purchaseDate')
@@ -84,8 +81,6 @@ class OrdersView(View):
         orderZip = zip(orders,total)
             
 
-
-      # 组织上下文
         context = {
            'orderZip': orderZip,
            'orders': orders,
@@ -140,7 +135,7 @@ def orderChange(request):
     if status == 'shipped':
         shipmentDate = datetime.now()
         Order.objects.filter(PONumber=PONumber).update(status=status,shipmentDate=shipmentDate)
-    elif status == 'cancel':
+    elif status == 'cancelled':
         cancelDate = datetime.now()
         Order.objects.filter(PONumber=PONumber).update(status=status,cancelDate=cancelDate)
     else:
@@ -216,9 +211,6 @@ class ReportView(View):
                 if i[2] == firstA:
                     best.append(i)
 
-        
-
-      # 组织上下文
         context = {
            'items': items,
            'dic': dic,

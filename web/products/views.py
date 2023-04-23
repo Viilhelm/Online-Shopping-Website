@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import View, TemplateView, ListView, DetailView
+from django.views.generic import View, TemplateView
 from products.models import Product, Category
 from order.models import OrderItem
 from django.core.paginator import Paginator
-from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.db.models import Q
 from .forms import ProductsAddForm
